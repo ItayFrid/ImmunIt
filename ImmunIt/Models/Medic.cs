@@ -18,10 +18,11 @@ namespace ImmunIt.Models
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must be 5 to 50 characters")]
         public string Name { get; set; }
         [Required]
+        [StringLength(15, MinimumLength = 3, ErrorMessage = "Password must be 3 to 15 characters")]
         public string Password { get; set; }
         [Required]
         public string role { get; set; }
         [Required]
-        public string Permission { get; set; }
+        public Boolean Permission { get; set; }
     }
 }
