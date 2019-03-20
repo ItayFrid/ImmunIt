@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -20,7 +21,7 @@ namespace ImmunIt.Models
         public string Password { get; set; }
         [Required]
         public string role { get; set; }
-
-
+        [Required]
+        public string Permission { get; set; }
     }
 }
