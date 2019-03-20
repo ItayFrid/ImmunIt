@@ -12,8 +12,8 @@ namespace ImmunIt.Models
         [Required]
         public string UserName { get; set; }
         [Required]
-        [StringLength(5, MinimumLength = 5, ErrorMessage = "Licence Number must be  5 characters")]
-        public string LicenceNumber { get; set; }
+        [StringLength(5, MinimumLength = 5, ErrorMessage = "License Number must be  5 characters")]
+        public string LicenseNumber { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must be 5 to 50 characters")]
         public string Name { get; set; }

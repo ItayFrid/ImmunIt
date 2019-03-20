@@ -11,6 +11,7 @@ namespace ImmunIt.Models
         [Key]
         [Required]
         public string Id { get; set; }
+        //Foreign Keys to Vaccine class
         public string Vaccines { get; set; }
     }
 }
