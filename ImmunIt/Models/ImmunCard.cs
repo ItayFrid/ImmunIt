@@ -13,10 +13,11 @@ namespace ImmunIt.Models
         {
             this.Vaccines = new HashSet<Vaccine>();
         }
-        [Required]
+
         [ForeignKey("Patient")]
-        public string Id { get; set; }
-        public virtual Patient Patient { get; set; }
+        public string ImmunCardId { get; set; }
+     
         public ICollection<Vaccine> Vaccines { get; set; }
+        public virtual Patient Patient { get; set; }
     }
 }

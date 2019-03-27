@@ -17,7 +17,7 @@ namespace ImmunIt.Models
         [Required]
         [StringLength(50, MinimumLength = 5, ErrorMessage = "Name must be between 5-50")]
         public string Name { get; set; }
-        public virtual ImmunCard ImmunCardId { get; set; }
+        public virtual ImmunCard ImmunCard { get; set; }
         public string BloodType { get; set; }
         public string MedicineAllergy { get; set; }
         public string ChronicDiseases { get; set; }
