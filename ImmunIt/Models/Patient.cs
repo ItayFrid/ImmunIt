@@ -20,7 +20,7 @@ namespace ImmunIt.Models
         public virtual ImmunCard ImmunCardId { get; set; }
         public string BloodType { get; set; }
         public string MedicineAllergy { get; set; }
-        public string Chroniciseases { get; set; }
+        public string ChronicDiseases { get; set; }
         [Required]
         public string role { get; set; }
     }
