@@ -16,14 +16,14 @@ namespace ImmunIt.DAL
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ImmunCard>().ToTable("ImmunCards");
             modelBuilder.Entity<Medic>().ToTable("Medics");
-            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Patient>().ToTable("Patients");
             modelBuilder.Entity<Vaccine>().ToTable("Vaccines");
         }
 
         /*Db Sets*/
         public DbSet<ImmunCard> ImmunCards { get; set; }
         public DbSet<Medic> Medics { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Patient> patients { get; set; }
         public DbSet<Vaccine> Vaccines { get; set; }
     }
 }

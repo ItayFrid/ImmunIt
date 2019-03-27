@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ImmunIt.DAL;
+using ImmunIt.Models;
+using ImmunIt.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +13,11 @@ namespace ImmunIt.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            DataLayer dal = new DataLayer();
+            ViewModel vm = new ViewModel();
+            vm.patients = (from x in dal.patients
+                           select x).ToList<Patient>();
+            return View(vm);
         }
 
         public ActionResult About()

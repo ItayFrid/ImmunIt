@@ -8,6 +8,10 @@ namespace ImmunIt.Models
 {
     public class Vaccine
     {
+        public Vaccine()
+        {
+            this.ImmunCards = new HashSet<ImmunCard>();
+        }
         [Key]
         public string Id { get; set; }
         [Required]
@@ -17,5 +21,6 @@ namespace ImmunIt.Models
         public DateTime DateExpired { get; set; }
         [Required]
         public string MedicLicense { get; set; }
+        public ICollection<ImmunCard> ImmunCards { get; set; }
     }
 }
