@@ -33,5 +33,19 @@ namespace ImmunIt.Controllers
 
             return View();
         }
+
+
+
+        public ActionResult WhatIsVac()
+        {
+            return View();
+        }
+
+
+        public ActionResult WhyVac()
+        {
+            return View();
+        }
+
     }
 }

@@ -245,6 +245,8 @@
     <Content Include="Views\Medic\PatientPage.cshtml" />
     <Content Include="Views\Medic\AddVaccine.cshtml" />
     <Content Include="Views\Manager\ManagerLogin.cshtml" />
+    <Content Include="Views\Home\WhatIsVac.cshtml" />
+    <Content Include="Views\Home\WhyVac.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
