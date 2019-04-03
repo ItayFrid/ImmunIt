@@ -1,8 +1,7 @@
-﻿
+﻿@model ImmunIt.Models.VaccineJson
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>Medic Index</h2>
 <hr />
 @* TODO: Add Authentication check to remove login and show other actions *@
@@ -17,3 +16,4 @@
         <a href="@Url.Action("SearchPatient", "Medic")">Search Patient</a>
     </li>
 </ul>
+@Model.Id
