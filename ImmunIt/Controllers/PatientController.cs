@@ -18,7 +18,9 @@ namespace ImmunIt.Controllers
 
         public ActionResult Login()
         {
-            return View();
+            Patient patient = new Patient();
+            ViewBag.PatientLoginMessage = "";
+            return View(patient);
         }
 
         public ActionResult WatchVaccinesInfo()
@@ -36,7 +38,7 @@ namespace ImmunIt.Controllers
 
 
 
-            return View(patient);
+            return View(patient[0]);
         }
 
         //public ActionResult PastVaccines()
