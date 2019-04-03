@@ -10,9 +10,10 @@ namespace ImmunIt.Models
     {
         public Vaccine()
         {
-            this.ImmunCards = new HashSet<ImmunCard>();
+            this.ImmunCards = new List<ImmunCard>();
         }
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Vaccine Name must be between 3-50 characters")]
@@ -21,6 +22,6 @@ namespace ImmunIt.Models
         public DateTime DateExpired { get; set; }
         [Required]
         public string MedicLicense { get; set; }
-        public ICollection<ImmunCard> ImmunCards { get; set; }
+        public virtual ICollection<ImmunCard> ImmunCards { get; set; }
     }
 }
