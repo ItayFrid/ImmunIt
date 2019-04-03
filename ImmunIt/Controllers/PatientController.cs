@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ImmunIt.DAL;
+using ImmunIt.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -26,9 +28,18 @@ namespace ImmunIt.Controllers
 
         public ActionResult WatchPastVaccines()
         {
-            return View();
+            DataLayer dal = new DataLayer();
+            //Getting current patient refrence
+            List<Patient> patient = (from x in dal.patients
+                                      where x.Id == User.Identity.Name
+                                      select x).ToList<Patient>();
+
+
+
+            return View(patient);
         }
 
+        //public ActionResult PastVaccines()
    
     }
 }

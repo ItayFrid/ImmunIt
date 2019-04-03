@@ -1,7 +1,27 @@
-﻿
+﻿@model ImmunIt.ViewModels.ViewModel
+@using ImmunIt.Models
 @{
     ViewBag.Title = "WatchPastVaccines";
 }
 
-<h2>WatchPastVaccines</h2>
+<h2>Watch Past Vaccines</h2>
 
+<hr />
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Date Given</th>
+        <th>Expiration Date</th>
+        <th>Given By</th>
+    </tr>
+    @foreach ( Vaccine vaccine in Model.immunCard.Vaccines)
+    {
+    <tr>
+        <td>@vaccine.Name</td>
+        <td>@vaccine.DateGiven</td>
+        <td color="@vaccine.getExpiredColor()">@vaccine.DateExpired</td>
+        <td>@vaccine.Medic.Name</td>
+
+    </tr>
+    }
+</table>
