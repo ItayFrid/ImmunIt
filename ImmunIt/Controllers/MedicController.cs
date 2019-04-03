@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ImmunIt.DAL;
+using ImmunIt.Models;
+using ImmunIt.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,7 +11,6 @@ namespace ImmunIt.Controllers
 {
     public class MedicController : Controller
     {
-        // GET: Medic
         public ActionResult Index()
         {
             return View();
@@ -16,7 +18,16 @@ namespace ImmunIt.Controllers
 
         public ActionResult Login()
         {
-            return View();
+            Medic medic = new Medic();
+            ViewBag.Message = "";
+            return View(medic);
+        }
+
+        public ActionResult MedicLogin(Medic medic)
+        {
+            DataLayer dal = new DataLayer();
+            List<Medic> MedicToCheck()
+            return RedirectToAction("Index", "Medic");
         }
 
         public ActionResult WatchVaccineInfo()

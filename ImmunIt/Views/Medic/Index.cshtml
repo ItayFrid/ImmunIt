@@ -3,5 +3,17 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Medic Index</h2>
+<hr />
 
+<ul class="list-group text-center">
+    <li class="list-group-item">
+        <a href="@Url.Action("Login", "Medic")">Login</a>
+    </li>
+    <li class="list-group-item">
+        <a href="@Url.Action("WatchVaccineInfo", "Medic")">Watch Vaccines Info</a>
+    </li>
+    <li class="list-group-item">
+        <a href="@Url.Action("SearchPatient", "Medic")">Search Patient</a>
+    </li>
+</ul>
