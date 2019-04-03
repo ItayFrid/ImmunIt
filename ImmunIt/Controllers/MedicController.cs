@@ -4,9 +4,11 @@ using ImmunIt.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Newtonsoft.Json;
 
 namespace ImmunIt.Controllers
 {
@@ -14,6 +16,8 @@ namespace ImmunIt.Controllers
     {
         public ActionResult Index()
         {
+            string vaccineJson = new WebClient().DownloadString("https://itayfrid.000webhostapp.com/vaccines.json");
+            List<VaccineJson> json = JsonConvert.DeserializeObject<List<VaccineJson>>(vaccineJson);
             return View();
         }
 
