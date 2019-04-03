@@ -19,6 +19,7 @@ namespace ImmunIt.Models
         [Required]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Vaccine Name must be between 3-50 characters")]
         public string Name { get; set; }
+        public string description { get; set; }
         public DateTime DateGiven { get; set; }
         public DateTime DateExpired { get; set; }
         public virtual Medic Medic { get; set; }
