@@ -20,6 +20,7 @@ namespace ImmunIt.Controllers
         public ActionResult Login()
         {
             Medic medic = new Medic();
+            ViewBag.Message = "";
             return View(medic);
         }
 
@@ -42,8 +43,14 @@ namespace ImmunIt.Controllers
                 string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                 var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                 Response.Cookies.Add(authCookie);
+                return RedirectToAction("Index", "Medic");
             }
-            return RedirectToAction("Index", "Medic");
+            else
+            {
+                ViewBag.Message = "Incorrect username / password";
+                return View("Login", medic);
+            }
+            
         }
 
         public ActionResult WatchVaccineInfo()
