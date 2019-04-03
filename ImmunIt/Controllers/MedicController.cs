@@ -67,9 +67,23 @@ namespace ImmunIt.Controllers
             return View();
         }
 
-        public ActionResult PatientPage()
+        public ActionResult getPatient()
         {
-            return View();
+            DataLayer dal = new DataLayer();
+            ViewModel vm = new ViewModel();
+            string id = Request.Form["id"];
+            List<Patient> patients = (from x in dal.patients
+                                      where x.Id == id
+                                      select x).ToList<Patient>();
+            if (patients.Count != 0)
+                return View("PatientPage", patients[0]);
+            ViewBag.Search = "Patient Not Found";
+            return RedirectToAction("SearchPatient", "Medic");
+        }
+
+        public ActionResult PatientPage(Patient patient)
+        {
+            return View(patient);
         }
 
         public ActionResult AddVaccine()
