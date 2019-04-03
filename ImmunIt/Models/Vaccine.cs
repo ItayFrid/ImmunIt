@@ -19,10 +19,18 @@ namespace ImmunIt.Models
         [Required]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Vaccine Name must be between 3-50 characters")]
         public string Name { get; set; }
+        public string description { get; set; }
         public DateTime DateGiven { get; set; }
         public DateTime DateExpired { get; set; }
-        [Required]
-        public string MedicLicense { get; set; }
+        public virtual Medic Medic { get; set; }
         public virtual ICollection<ImmunCard> ImmunCards { get; set; }
+
+        //This method returns a red color if a vaccine has expired
+        public string getExpiredColor()
+        {
+            if (this.DateExpired < DateTime.Now)
+                return "text-danger";
+            return "";
+        }
     }
 }

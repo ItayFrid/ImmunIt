@@ -1,7 +1,31 @@
 ﻿
+@model ImmunIt.ViewModels.ViewModel
+@using ImmunIt.Models
 @{
     ViewBag.Title = "PatientPage";
 }
 
-<h2>PatientPage</h2>
+@if (Model.medic != null)
+{
+    <h2>Welcome, Model.medic</h2>
+}
 
+<br>
+
+<table class="table">
+    <tr>
+        <th>Patient ID</th>
+        <th>Name</th>
+        <th>Blood Type</th>
+        <th>Medicines Allergy</th>
+        <th>Chronic Diseases</th>
+    </tr>
+
+    <tr>
+        <td>@Model.patient.Id</td>
+        <td>@Model.patient.Name</td>
+        <td>@Model.patient.BloodType</td>
+        <td>@Model.patient.ChronicDiseases</td>
+    </tr>
+    }
+</table>
