@@ -1,7 +1,39 @@
 ﻿
+@model ImmunIt.ViewModels.ViewModel
+@using ImmunIt.Models
 @{
     ViewBag.Title = "PatientPage";
 }
 
-<h2>PatientPage</h2>
+@if (Model.medic != null)
+{
+    <h2>Welcome, Model.medic</h2>
+}
 
+<br>
+
+<table class="table">
+    <tr>
+        <th>Patient ID</th>
+        <th>first Name</th>
+        <th>Last Name</th>
+        <th>Blood Type</th>
+        <th>Medicines Allergy</th>
+        <th>Chronic Diseases</th>
+    </tr>
+
+    <tr>
+        <td>@Model.patient.Id</td>
+        <td>@Model.patient.firstName</td>
+        <td>@Model.patient.lastName</td>
+        <td>@Model.patient.position</td>
+        <td>@Model.patient.rating</td>
+        <td>
+            <form action="DeletePlayer" method="post">
+                <input name="delNumber" type="hidden" value="@player.number" />
+                <input type="submit" class="btn btn-outline-danger" value="Delete" />
+            </form>
+        </td>
+    </tr>
+    }
+</table>
