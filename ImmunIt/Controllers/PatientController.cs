@@ -49,7 +49,7 @@ namespace ImmunIt.Controllers
 
                     var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                     Response.Cookies.Add(authCookie);
-                    return RedirectToRoute("HomePage");
+                    return RedirectToAction("Index", "Patient");
                 }
                 else
                 {
