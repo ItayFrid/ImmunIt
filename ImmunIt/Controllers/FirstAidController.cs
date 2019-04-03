@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ImmunIt.DAL;
+using ImmunIt.Models;
+using ImmunIt.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
