@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -18,6 +19,7 @@ namespace ImmunIt.Models
         [Required]
         [StringLength(50, MinimumLength = 5, ErrorMessage = "Name must be between 5-50")]
         public string Name { get; set; }
+        [ForeignKey("ImmunCard")]
         public virtual ImmunCard ImmunCard { get; set; }
         public string BloodType { get; set; }
         public string MedicineAllergy { get; set; }
