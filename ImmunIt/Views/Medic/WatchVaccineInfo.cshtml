@@ -7,10 +7,20 @@
 <hr /> 
 <table class="table">
     <thead>
-        <th>
-            <td></td>
-            <td></td>
-            <td></td>
-        </th>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>ExpDate</th>
+        </tr>
     </thead>
+    @foreach (var vaccine in Model.vaccinesJson)
+    {
+        <tr>
+            <td>@vaccine.Id</td>
+            <td>@vaccine.Name</td>
+            <td>@vaccine.Description</td>
+            <td>@vaccine.ExpDate</td>
+        </tr>
+    }
 </table>
