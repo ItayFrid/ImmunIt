@@ -13,5 +13,33 @@ namespace ImmunIt.Controllers
         {
             return View();
         }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult WatchVaccineInfo()
+        {
+            return View();
+        }
+
+        public ActionResult SearchPatient()
+        {
+            return View();
+        }
+
+        public ActionResult PatientPage()
+        {
+            return View();
+        }
+
+        public ActionResult AddVaccine()
+        {
+            return View();
+        }
+
     }
+
+
 }

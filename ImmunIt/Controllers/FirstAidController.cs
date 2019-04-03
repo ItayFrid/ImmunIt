@@ -13,5 +13,10 @@ namespace ImmunIt.Controllers
         {
             return View();
         }
+
+        public ActionResult PatientPage()
+        {
+            return View();
+        }
     }
 }

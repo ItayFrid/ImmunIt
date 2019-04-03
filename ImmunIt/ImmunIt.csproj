@@ -225,13 +225,26 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Patient\Index.cshtml" />
+    <Content Include="Views\Patient\Login.cshtml" />
+    <Content Include="Views\Patient\WatchVaccinesInfo.cshtml" />
+    <Content Include="Views\Patient\WatchPastVaccines.cshtml" />
+    <Content Include="Views\Manager\Login.cshtml" />
+    <Content Include="Views\Manager\AddMedic.cshtml" />
+    <Content Include="Views\Manager\AddPatient.cshtml" />
+    <Content Include="Views\Manager\ViewAllUsers.cshtml" />
+    <Content Include="Views\Manager\Index.cshtml" />
+    <Content Include="Views\FirstAid\Index.cshtml" />
+    <Content Include="Views\FirstAid\PatientPage.cshtml" />
+    <Content Include="Views\Medic\Index.cshtml" />
+    <Content Include="Views\Medic\Login.cshtml" />
+    <Content Include="Views\Medic\WatchVaccineInfo.cshtml" />
+    <Content Include="Views\Medic\SearchPatient.cshtml" />
+    <Content Include="Views\Medic\PatientPage.cshtml" />
+    <Content Include="Views\Medic\AddVaccine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\FirstAid\" />
-    <Folder Include="Views\Manager\" />
-    <Folder Include="Views\Medic\" />
-    <Folder Include="Views\Patient\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
