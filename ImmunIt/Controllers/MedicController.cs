@@ -16,8 +16,6 @@ namespace ImmunIt.Controllers
     {
         public ActionResult Index()
         {
-            string vaccineJson = new WebClient().DownloadString("https://itayfrid.000webhostapp.com/vaccines.json");
-            List<VaccineJson> json = JsonConvert.DeserializeObject<List<VaccineJson>>(vaccineJson);
             return View();
         }
 
@@ -59,7 +57,9 @@ namespace ImmunIt.Controllers
 
         public ActionResult WatchVaccineInfo()
         {
-            return View();
+            ViewModel vm = new ViewModel();
+            vm.vaccinesJson = getVaccines();
+            return View(vm);
         }
 
         public ActionResult SearchPatient()
@@ -67,9 +67,23 @@ namespace ImmunIt.Controllers
             return View();
         }
 
-        public ActionResult PatientPage()
+        public ActionResult getPatient()
         {
-            return View();
+            DataLayer dal = new DataLayer();
+            ViewModel vm = new ViewModel();
+            string id = Request.Form["id"];
+            List<Patient> patients = (from x in dal.patients
+                                      where x.Id == id
+                                      select x).ToList<Patient>();
+            if (patients.Count != 0)
+                return View("PatientPage", patients[0]);
+            ViewBag.Search = "Patient Not Found";
+            return RedirectToAction("SearchPatient", "Medic");
+        }
+
+        public ActionResult PatientPage(Patient patient)
+        {
+            return View(patient);
         }
 
         public ActionResult AddVaccine()
@@ -77,6 +91,12 @@ namespace ImmunIt.Controllers
             return View();
         }
 
+        public List<VaccineJson> getVaccines()
+        {
+            string vaccineJson = new WebClient().DownloadString("https://itayfrid.000webhostapp.com/vaccines.json");
+            List<VaccineJson> json = JsonConvert.DeserializeObject<List<VaccineJson>>(vaccineJson);
+            return json;
+        }
     }
 
 

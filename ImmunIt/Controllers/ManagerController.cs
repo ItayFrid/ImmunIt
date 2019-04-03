@@ -72,6 +72,11 @@ namespace ImmunIt.Controllers
                 //string hashedPassword = enc.CreateHash(medic.password);      //Encrypting user's password
                 if (!patientExists(patient.Id))     //Adding user to database
                 {
+                    ImmunCard immunCard = new ImmunCard();
+                    immunCard.Patient = patient;
+                    patient.role = "Patient";
+                    patient.ImmunCard = immunCard;
+                    dal.ImmunCards.Add(immunCard);
                     // medic.password = hashedPassword;
                     dal.patients.Add(patient);
                     dal.SaveChanges();
@@ -126,6 +131,7 @@ namespace ImmunIt.Controllers
                 {
                    // medic.password = hashedPassword;
                     dal.Medics.Add(medic);
+                    medic.role = "Medic";
                     dal.SaveChanges();
                     ViewBag.message = "Medic was added succesfully.";
                     medic = new Medic();

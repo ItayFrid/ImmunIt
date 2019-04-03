@@ -15,7 +15,7 @@ namespace ImmunIt.Models
         }
         [ForeignKey("Patient")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
+        public string ImmunCardId { get; set; }
      
         public virtual ICollection<Vaccine> Vaccines { get; set; }
         public virtual Patient Patient { get; set; }
