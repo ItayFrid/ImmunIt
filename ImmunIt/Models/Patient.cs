@@ -11,6 +11,7 @@ namespace ImmunIt.Models
         [Key]
         [Required]
         [RegularExpression("^[0-9]{9,9}$")]
+        [StringLength(9,MinimumLength =9 , ErrorMessage ="Id Must be 9 digits!")]
         public string Id { get; set; }
         [Required]
         public string Password { get; set; }

@@ -22,7 +22,5 @@ namespace ImmunIt.Models
         public string Password { get; set; }
         [Required]
         public string role { get; set; }
-        [Required]
-        public Boolean Permission { get; set; }
     }
 }

@@ -1,7 +1,79 @@
-﻿
+﻿@model ImmunIt.Models.Patient
+
+
 @{
+    /**/
+
     ViewBag.Title = "AddPatient";
 }
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<h2>Patient Register</h2>
+<hr />
 
-<h2>AddPatient</h2>
+@using (Html.BeginForm("PatientRegister", "Manager", FormMethod.Post))
+{
+    <div class="form-group row">
+        <label for="inputId" class="col-sm-2 col-form-label">Id</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.Id, new { @class = "form-control", id = "inputId" })
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.Id)</small>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "inputPassword" })
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.Password)</small>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="inputName" class="col-sm-2 col-form-label">Full Name</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", id = "inputName" })
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.Name)</small>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="inputBloodType" class="col-sm-2 col-form-label">Blood Type</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.BloodType, new { @class = "form-control", id = "inputBloodType" })
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.BloodType)</small>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="inputMedicineAllergy" class="col-sm-2 col-form-label">Medicine Allergy</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.MedicineAllergy, new { @class = "form-control", id = "inputMedicineAllergy" })
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.MedicineAllergy)</small>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="inputChronicDiseases" class="col-sm-2 col-form-label">Chronic Diseases</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.ChronicDiseases, new { @class = "form-control", id = "inputChronicDiseases" })
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.ChronicDiseases)</small>
+        </div>
+    </div>
+
+
+
+
+    <input id="role" name="role" type="hidden" value="Patient" />
+    <input class="btn btn-outline-primary" id="submit" type="submit" value="Add Patient" />
+    <h4 class="text-danger">@ViewBag.message</h4>
+}
+
+
+
+
+
 

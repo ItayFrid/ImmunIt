@@ -25,16 +25,13 @@ namespace ImmunIt.Controllers
 
         public ActionResult ManagerLogin(Manager mng)
         {
-
             DataLayer dal = new DataLayer();
-            //Encryption enc = new Encryption();
             List<Manager> ManagerToCheck = (from x in dal.Managers
-                                         where x.UserName == mng.UserName
-                                         select x).ToList<Manager>();       //Attempting to get user information from database
+                                            where x.UserName == mng.UserName
+                                            select x).ToList<Manager>();       //Attempting to get manager information from database
             if (ManagerToCheck.Count != 0)     //In case username was found
             {
-                // if (enc.ValidatePassword(user.password, userToCheck[0].password))   //Correct password
-                //{
+
                 var authTicket = new FormsAuthenticationTicket(
                     1,                                  // version
                     mng.UserName,                      // user name
@@ -48,8 +45,7 @@ namespace ImmunIt.Controllers
 
                 var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                 Response.Cookies.Add(authCookie);
-                return RedirectToAction("Index","Manager");
-                //}
+                return RedirectToAction("Index", "Manager");
 
             }
             else
@@ -57,17 +53,102 @@ namespace ImmunIt.Controllers
             return View("ManagerLogin", mng);
 
         }
-        public ActionResult AddMedic()
-        {
-            return View();
-        }
+
+   
+
+
         public ActionResult AddPatient()
         {
-            return View();
+            Patient medic = new Patient();
+            return View("AddPatient", medic);
         }
+
+        public ActionResult PatientRegister(Patient patient)
+        {
+            DataLayer dal = new DataLayer();
+
+            if (ModelState.IsValid)
+            {
+                //string hashedPassword = enc.CreateHash(medic.password);      //Encrypting user's password
+                if (!patientExists(patient.Id))     //Adding user to database
+                {
+                    // medic.password = hashedPassword;
+                    dal.patients.Add(patient);
+                    dal.SaveChanges();
+                    ViewBag.message = "Patient was added succesfully.";
+                    patient = new Patient();
+                }
+                else
+                    ViewBag.message = "ID Exists in database.";
+            }
+            else
+                ViewBag.message = "Error in registration.";
+            return View("AddPatient", patient);
+        }
+
+        /*This function compares given username with usernames in database*/
+        private bool patientExists(string Id)
+        {
+            DataLayer dal = new DataLayer();
+            List<Patient> users = dal.patients.ToList<Patient>();
+            foreach (Patient user in dal.patients)
+                if (user.Id.Equals(Id))
+                    return true;
+            return false;
+        }
+
+
+
+
         public ActionResult ViewAllUsers()
         {
             return View();
+        }
+
+
+        /*This function redirects to medic register page*/
+        public ActionResult AddMedic()
+        {
+            Medic medic = new Medic();
+            return View("AddMedic",medic);
+        }
+
+        /*This function adds new user to database*/
+        /*Given user information from user register form*/
+        public ActionResult MedicRegister(Medic medic)
+        {
+            DataLayer dal = new DataLayer();
+
+            if (ModelState.IsValid)
+            {
+                //string hashedPassword = enc.CreateHash(medic.password);      //Encrypting user's password
+                if (!medicExists(medic.UserName))     //Adding user to database
+                {
+                   // medic.password = hashedPassword;
+                    dal.Medics.Add(medic);
+                    dal.SaveChanges();
+                    ViewBag.message = "Medic was added succesfully.";
+                    medic = new Medic();
+                }
+                else
+                    ViewBag.message = "Username Exists in database.";
+            }
+            else
+                ViewBag.message = "Error in registration.";
+            return View("AddMedic", medic);
+        }
+
+
+
+        /*This function compares given username with usernames in database*/
+        private bool medicExists(string userName)
+        {
+            DataLayer dal = new DataLayer();
+            List<Medic> users = dal.Medics.ToList<Medic>();
+            foreach (Medic user in dal.Medics)
+                if (user.UserName.Equals(userName))
+                    return true;
+            return false;
         }
     }
 }
