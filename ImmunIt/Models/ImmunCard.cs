@@ -13,7 +13,7 @@ namespace ImmunIt.Models
         {
             this.Vaccines = new List<Vaccine>();
         }
-        [Key]
+        [ForeignKey("Patient")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
      
