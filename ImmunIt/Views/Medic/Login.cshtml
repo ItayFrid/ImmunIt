@@ -1,8 +1,31 @@
 ﻿@model ImmunIt.Models.Medic
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "PatientLogin";
 }
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<h2>Medic Login</h2>
+<hr />
+@using (Html.BeginForm("PatientLogin", "Patient", FormMethod.Post))
+{
+    <div class="form-group row">
+        <label for="inputID" class="col-sm-2 col-form-label">ID</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.Id, new { @class = "form-control", id = "inputID" })
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.Id)</small>
+        </div>
+    </div>
 
-<h2>Login</h2>
+    <div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "inputPassword" })
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.Password)</small>
+        </div>
+    </div>
 
+    <input class="btn btn-outline-primary" id="Submit" type="submit" value="Login" />
+    <h4 class="text-danger">@ViewBag.PatientLoginMessage</h4>
+}
