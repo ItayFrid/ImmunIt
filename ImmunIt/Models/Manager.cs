@@ -6,15 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ImmunIt.Models
 {
-    public class Manager
+    public class Manager : User
     {
-        [Key]
-        [Required]
-        public string UserName { get; set; }
-        
-        public string role { get; set; }
-        [Required]
-        public string Password { get; set; }
+
 
     }
 }

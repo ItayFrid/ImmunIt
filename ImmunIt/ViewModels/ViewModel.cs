@@ -8,8 +8,8 @@ namespace ImmunIt.ViewModels
 {
     public class ViewModel
     {
-        public ImmunCard immunCard { get; set; }
-        public List<ImmunCard> immunCards { get; set; }
+        public ImmuneCard immuneCard { get; set; }
+        public List<ImmuneCard> immuneCards { get; set; }
         public Medic medic { get; set; }
         public List<Medic> medics { get; set; }
         public Patient patient { get; set; }

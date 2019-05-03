@@ -11,7 +11,7 @@ namespace ImmunIt.Models
     {
         public Vaccine()
         {
-            this.ImmunCards = new List<ImmunCard>();
+            this.ImmunCards = new List<ImmuneCard>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,7 +23,7 @@ namespace ImmunIt.Models
         public DateTime DateGiven { get; set; }
         public DateTime DateExpired { get; set; }
         public virtual Medic Medic { get; set; }
-        public virtual ICollection<ImmunCard> ImmunCards { get; set; }
+        public virtual ICollection<ImmuneCard> ImmunCards { get; set; }
 
         //This method returns a red color if a vaccine has expired
         public string getExpiredColor()

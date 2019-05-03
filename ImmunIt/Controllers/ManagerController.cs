@@ -1,4 +1,5 @@
-﻿using ImmunIt.DAL;
+﻿using ImmunIt.Classes;
+using ImmunIt.DAL;
 using ImmunIt.Models;
 using System;
 using System.Collections.Generic;
@@ -17,67 +18,33 @@ namespace ImmunIt.Controllers
 
             return View();
         }
-        public ActionResult Login()
-        {
-            Manager mng = new Manager();
-            return View(mng);
-        }
-
-        public ActionResult ManagerLogin(Manager mng)
-        {
-            DataLayer dal = new DataLayer();
-            List<Manager> ManagerToCheck = (from x in dal.Managers
-                                            where x.UserName == mng.UserName
-                                            select x).ToList<Manager>();       //Attempting to get manager information from database
-            if (ManagerToCheck.Count != 0)     //In case username was found
-            {
-
-                var authTicket = new FormsAuthenticationTicket(
-                    1,                                  // version
-                    mng.UserName,                      // user name
-                    DateTime.Now,                       // created
-                    DateTime.Now.AddMinutes(20),        // expires
-                    true,       //keep me connected
-                    ManagerToCheck[0].role                       // store roles
-                    );
-
-                string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
-
-                var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-                Response.Cookies.Add(authCookie);
-                return RedirectToAction("Index", "Manager");
-
-            }
-            else
-                ViewBag.UserLoginMessage = "Incorrect Username/password";
-            return View("ManagerLogin", mng);
-
-        }
-
-   
 
 
         public ActionResult AddPatient()
         {
-            Patient medic = new Patient();
-            return View("AddPatient", medic);
+            Patient patient = new Patient();
+            return View("AddPatient", patient);
         }
 
         public ActionResult PatientRegister(Patient patient)
         {
             DataLayer dal = new DataLayer();
-
+            Encryption enc = new Encryption();
             if (ModelState.IsValid)
             {
-                //string hashedPassword = enc.CreateHash(medic.password);      //Encrypting user's password
-                if (!patientExists(patient.Id))     //Adding user to database
+                string hashedPassword = enc.CreateHash(patient.Password);      //Encrypting user's password
+                if (!userExists(patient.Id))     //Adding user to database
                 {
-                    ImmunCard immunCard = new ImmunCard();
-                    immunCard.Patient = patient;
+                    ImmuneCard icard = new ImmuneCard();
+                    icard.Patient = patient;
+                    icard.ImmuneCardId = patient.Id;
+                    icard.Vaccines = new List<Vaccine>();
+                    
                     patient.role = "Patient";
-                    patient.ImmunCard = immunCard;
-                    dal.ImmunCards.Add(immunCard);
-                    // medic.password = hashedPassword;
+                    patient.card = icard;
+                    patient.Password = hashedPassword;
+
+                    dal.ImmuneCards.Add(icard);
                     dal.patients.Add(patient);
                     dal.SaveChanges();
                     ViewBag.message = "Patient was added succesfully.";
@@ -91,31 +58,11 @@ namespace ImmunIt.Controllers
             return View("AddPatient", patient);
         }
 
-        /*This function compares given username with usernames in database*/
-        private bool patientExists(string Id)
-        {
-            DataLayer dal = new DataLayer();
-            List<Patient> users = dal.patients.ToList<Patient>();
-            foreach (Patient user in dal.patients)
-                if (user.Id.Equals(Id))
-                    return true;
-            return false;
-        }
-
-
-
-
-        public ActionResult ViewAllUsers()
-        {
-            return View();
-        }
-
-
         /*This function redirects to medic register page*/
         public ActionResult AddMedic()
         {
             Medic medic = new Medic();
-            return View("AddMedic",medic);
+            return View("AddMedic", medic);
         }
 
         /*This function adds new user to database*/
@@ -123,14 +70,15 @@ namespace ImmunIt.Controllers
         public ActionResult MedicRegister(Medic medic)
         {
             DataLayer dal = new DataLayer();
+            Encryption enc = new Encryption();
 
             if (ModelState.IsValid)
             {
-                //string hashedPassword = enc.CreateHash(medic.password);      //Encrypting user's password
-                if (!medicExists(medic.UserName))     //Adding user to database
+                string hashedPassword = enc.CreateHash(medic.Password);      //Encrypting user's password
+                if (!userExists(medic.Id))     //Adding user to database
                 {
-                   // medic.password = hashedPassword;
-                    dal.Medics.Add(medic);
+                    medic.Password = hashedPassword;
+                    dal.medics.Add(medic);
                     medic.role = "Medic";
                     dal.SaveChanges();
                     ViewBag.message = "Medic was added succesfully.";
@@ -144,17 +92,23 @@ namespace ImmunIt.Controllers
             return View("AddMedic", medic);
         }
 
-
-
-        /*This function compares given username with usernames in database*/
-        private bool medicExists(string userName)
+        /*This function compares given id with id's in database*/
+        private bool userExists(string id)
         {
             DataLayer dal = new DataLayer();
-            List<Medic> users = dal.Medics.ToList<Medic>();
-            foreach (Medic user in dal.Medics)
-                if (user.UserName.Equals(userName))
+            List<User> users = dal.users.ToList<User>();
+            foreach (User user in dal.users)
+                if (user.Id.Equals(id))
                     return true;
             return false;
         }
+
+        public ActionResult ViewAllUsers()
+        {
+            return View();
+        }
+
+
     }
+   
 }

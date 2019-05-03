@@ -137,6 +137,7 @@
     <Compile Include="Classes\Encryption.cs" />
     <Compile Include="Controllers\FirstAidController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\MedicController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
@@ -144,10 +145,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ImmunCard.cs" />
+    <Compile Include="Models\ImmuneCard.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\Medic.cs" />
     <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vaccine.cs" />
     <Compile Include="Models\VaccineJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -228,10 +230,8 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Patient\Index.cshtml" />
-    <Content Include="Views\Patient\Login.cshtml" />
     <Content Include="Views\Patient\WatchVaccinesInfo.cshtml" />
     <Content Include="Views\Patient\WatchPastVaccines.cshtml" />
-    <Content Include="Views\Manager\Login.cshtml" />
     <Content Include="Views\Manager\AddMedic.cshtml" />
     <Content Include="Views\Manager\AddPatient.cshtml" />
     <Content Include="Views\Manager\ViewAllUsers.cshtml" />
@@ -239,7 +239,6 @@
     <Content Include="Views\FirstAid\Index.cshtml" />
     <Content Include="Views\FirstAid\PatientPage.cshtml" />
     <Content Include="Views\Medic\Index.cshtml" />
-    <Content Include="Views\Medic\Login.cshtml" />
     <Content Include="Views\Medic\WatchVaccineInfo.cshtml" />
     <Content Include="Views\Medic\SearchPatient.cshtml" />
     <Content Include="Views\Medic\PatientPage.cshtml" />
@@ -247,6 +246,7 @@
     <Content Include="Views\Manager\ManagerLogin.cshtml" />
     <Content Include="Views\Home\WhatIsVac.cshtml" />
     <Content Include="Views\Home\WhyVac.cshtml" />
+    <Content Include="Views\Login\UserLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

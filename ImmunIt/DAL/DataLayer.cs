@@ -14,7 +14,8 @@ namespace ImmunIt.DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<ImmunCard>().ToTable("ImmunCards");
+            modelBuilder.Entity<ImmuneCard>().ToTable("ImmuneCards");
+            modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Manager>().ToTable("Managers");
             modelBuilder.Entity<Medic>().ToTable("Medics");
             modelBuilder.Entity<Patient>().ToTable("Patients");
@@ -22,9 +23,10 @@ namespace ImmunIt.DAL
         }
 
         /*Db Sets*/
-        public DbSet<ImmunCard> ImmunCards { get; set; }
-        public DbSet<Manager> Managers { get; set; }
-        public DbSet<Medic> Medics { get; set; }
+        public DbSet<ImmuneCard> ImmuneCards { get; set; }
+        public DbSet<User> users { get; set; }
+        public DbSet<Manager> managers { get; set; }
+        public DbSet<Medic> medics { get; set; }
         public DbSet<Patient> patients { get; set; }
         public DbSet<Vaccine> Vaccines { get; set; }
 

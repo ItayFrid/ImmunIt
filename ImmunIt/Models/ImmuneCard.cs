@@ -7,17 +7,18 @@ using System.Web;
 
 namespace ImmunIt.Models
 {
-    public class ImmunCard
+    public class ImmuneCard
     {
-        public ImmunCard()
+        public ImmuneCard()
         {
             this.Vaccines = new List<Vaccine>();
         }
         [ForeignKey("Patient")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string ImmunCardId { get; set; }
-     
-        public virtual ICollection<Vaccine> Vaccines { get; set; }
+        public string ImmuneCardId { get; set; }
+
+        //public virtual ICollection<Vaccine> Vaccines { get; set; }
+        public List<Vaccine> Vaccines { get; set; }
         public virtual Patient Patient { get; set; }
     }
 }
