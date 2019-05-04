@@ -1,7 +1,76 @@
-﻿
-@{
-    ViewBag.Title = "ViewAllUsers";
-}
+﻿@model ImmunIt.ViewModels.ViewModel
 
-<h2>ViewAllUsers</h2>
-
+<h1>View all users</h1>
+<hr />
+<div class="row">
+    <div class="col-sm-6">
+        <h3>Unblocked</h3>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Block</th>
+                </tr>
+            </thead>
+            @foreach (var user in Model.users)
+            {
+                if (!user.blocked)
+                {
+                    <tr>
+                        <td>@user.email</td>
+                        <td>@user.role</td>
+                        <td>
+                            @if (user.email == Model.user.email)
+                            {
+                                <button class="btn btn-outline-@Model.user.getBlockedColor()" disabled>@Model.user.getBlockedText()</button>
+                            }
+                            else
+                            {
+                                <form action="BlockUser" method="post">
+                                    <input name="block" type="hidden" value="@user.email" />
+                                    <input type="submit" class="btn btn-outline-@user.getBlockedColor()" value="@user.getBlockedText()" />
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <h3>Blocked</h3>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Unblock</th>
+                </tr>
+            </thead>
+            @foreach (var user in Model.users)
+            {
+                if (user.blocked)
+                {
+                    <tr>
+                        <td>@user.email</td>
+                        <td>@user.role</td>
+                        <td>
+                            @if (user.email == Model.user.email)
+                            {
+                                <button class="btn btn-outline-@Model.user.getBlockedColor()" disabled>@Model.user.getBlockedText()</button>
+                            }
+                            else
+                            {
+                                <form action="BlockUser" method="post">
+                                    <input name="block" type="hidden" value="@user.email" />
+                                    <input type="submit" class="btn btn-outline-@user.getBlockedColor()" value="@user.getBlockedText()" />
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>

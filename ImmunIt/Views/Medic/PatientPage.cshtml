@@ -7,3 +7,14 @@
 <hr />
 
 <h4>@Model.Name</h4> <small>[@Model.Id]</small>
+
+<ul class="list-group text-center">
+    <li class="list-group-item">
+        <form action="NewVaccine" method="post">
+            <input name="patientId" type="hidden" value="@Model.Id" />
+            <input name="medicId" type="hidden" value="@User.Identity.Name" />
+            <input type="submit" class="btn btn-outline-primary" value="Add Vaccine" />
+        </form>
+
+    </li>
+</ul>

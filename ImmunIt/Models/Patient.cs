@@ -10,7 +10,7 @@ namespace ImmunIt.Models
     public class Patient : User
     {
 
-        [ForeignKey("ImmuneCard")]
+        //[ForeignKey("ImmuneCard")]
         public ImmuneCard card { get; set; }
 
         public string BloodType { get; set; }

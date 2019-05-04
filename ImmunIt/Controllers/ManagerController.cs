@@ -1,8 +1,10 @@
 ﻿using ImmunIt.Classes;
 using ImmunIt.DAL;
 using ImmunIt.Models;
+using ImmunIt.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -35,14 +37,11 @@ namespace ImmunIt.Controllers
                 string hashedPassword = enc.CreateHash(patient.Password);      //Encrypting user's password
                 if (!userExists(patient.Id))     //Adding user to database
                 {
-                    ImmuneCard icard = new ImmuneCard();
-                    icard.Patient = patient;
-                    icard.ImmuneCardId = patient.Id;
-                    icard.Vaccines = new List<Vaccine>();
-                    
-                    patient.role = "Patient";
+                    ImmuneCard icard = new ImmuneCard { patientId = patient.Id };
                     patient.card = icard;
                     patient.Password = hashedPassword;
+
+                    
 
                     dal.ImmuneCards.Add(icard);
                     dal.patients.Add(patient);
@@ -79,8 +78,8 @@ namespace ImmunIt.Controllers
                 {
                     medic.Password = hashedPassword;
                     dal.medics.Add(medic);
-                    medic.role = "Medic";
                     dal.SaveChanges();
+                    
                     ViewBag.message = "Medic was added succesfully.";
                     medic = new Medic();
                 }
@@ -105,7 +104,18 @@ namespace ImmunIt.Controllers
 
         public ActionResult ViewAllUsers()
         {
-            return View();
+            ViewModel vm = new ViewModel();
+            DataLayer dal = new DataLayer();
+
+            vm.patients = (from x in dal.patients
+                           select x).ToList<Patient>();
+            vm.medics = (from x in dal.medics
+                           select x).ToList<Medic>();
+            vm.users = (from x in dal.users
+                        where x.role == "Manager"
+                        select x).ToList<User>();
+
+            return View(vm);
         }
 
 

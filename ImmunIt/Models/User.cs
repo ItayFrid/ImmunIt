@@ -19,7 +19,7 @@ namespace ImmunIt.Models
         public string Id { get; set; }
 
         [Required]
-        [StringLength(15, MinimumLength = 3, ErrorMessage = "Password must be 3 to 15 characters")]
+        [StringLength(9999999,MinimumLength = 3, ErrorMessage = "Password must be at least 3 characters")]
         public string Password { get; set; }
 
         [Required]

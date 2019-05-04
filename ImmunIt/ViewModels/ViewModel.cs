@@ -17,5 +17,7 @@ namespace ImmunIt.ViewModels
         public Vaccine vaccine { get; set; }
         public List<Vaccine> vaccines { get; set; }
         public List<VaccineJson> vaccinesJson { get; set; }
+
+        public List<User> users { get; set; }
     }
 }
