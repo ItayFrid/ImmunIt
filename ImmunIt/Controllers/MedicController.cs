@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 
 namespace ImmunIt.Controllers
 {
+
+    //[Authorize(Roles = "Medic")]
     public class MedicController : Controller
     {
         public ActionResult Index()
@@ -51,10 +53,6 @@ namespace ImmunIt.Controllers
             return View(patient);
         }
 
-        public ActionResult AddVaccine()
-        {
-            return View();
-        }
 
         public List<VaccineJson> getVaccines()
         {
@@ -62,6 +60,40 @@ namespace ImmunIt.Controllers
             List<VaccineJson> json = JsonConvert.DeserializeObject<List<VaccineJson>>(vaccineJson);
             return json;
         }
+
+        public ActionResult AddVaccine(Vaccine vacc)
+        {
+            
+            string pId = Request.Form["patientId"], mId = Request.Form["medicId"];
+            DataLayer dal = new DataLayer();
+            
+            List<ImmuneCard> card = (from x in dal.ImmuneCards
+                                     where x.patientId == pId
+                                     select x).ToList<ImmuneCard>();
+
+            List<Medic> medic = (from x in dal.medics
+                                     where x.Id == User.Identity.Name
+                                     select x).ToList<Medic>();
+
+            if (ModelState.IsValid)
+            {
+                vacc.card = card[0];
+                vacc.medic = medic[0];
+
+                card[0].Vaccines.Add(vacc);
+                ViewBag.message = "Vaccine added succesfully.";
+                dal.SaveChanges();
+                
+            }
+            else
+            {
+                ViewBag.message = "Invalid vaccine information.";
+            }
+
+            vacc = new Vaccine();
+            return View("AddVaccine", vacc);
+        }
+
     }
 
 

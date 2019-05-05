@@ -42,7 +42,7 @@ namespace ImmunIt.Controllers
                 {
                     var authTicket = new FormsAuthenticationTicket(
                         1,                                  // version
-                        user.Id,                      // user name
+                        user.Id,                      // user id
                         DateTime.Now,                       // created
                         DateTime.Now.AddMinutes(20),        // expires
                         true,       //keep me connected

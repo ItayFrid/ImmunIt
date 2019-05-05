@@ -15,8 +15,8 @@ namespace ImmunIt.Controllers
         {
             DataLayer dal = new DataLayer();
             ViewModel vm = new ViewModel();
-            vm.patients = (from x in dal.patients
-                           select x).ToList<Patient>();
+          //  vm.patients = (from x in dal.patients
+          //                 select x).ToList<Patient>();
             return View(vm);
         }
 

@@ -10,8 +10,8 @@ namespace ImmunIt.Models
     public class Patient : User
     {
 
-        [ForeignKey("ImmuneCard")]
-        public ImmuneCard card { get; set; }
+        
+        public virtual ImmuneCard card { get; set; }
 
         public string BloodType { get; set; }
         public string MedicineAllergy { get; set; }

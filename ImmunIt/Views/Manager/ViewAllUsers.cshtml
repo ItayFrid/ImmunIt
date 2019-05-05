@@ -1,7 +1,68 @@
-﻿
+﻿@model ImmunIt.ViewModels.ViewModel
+
 @{
     ViewBag.Title = "ViewAllUsers";
 }
 
-<h2>ViewAllUsers</h2>
+<h2>View All Users</h2>
+<hr />
+<div class="row container text-center">
+    <div class="col-sm-4">
+        <h4>Managers</h4>
+        <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Id</th>
+                </tr>
+            </thead>
+            @foreach (var manager in Model.users)
+            {
+                <tr>
+                    <td>@manager.Name</td>
+                    <td>@manager.Id</td>
+                </tr>
+            }
+        </table>
+        Total Managers :<b class="text-info"> @Model.users.Count</b>
+    </div>
+    <div class="col-sm-4">
+        <h4>Medics</h4>
+        <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Id</th>
+                </tr>
+            </thead>
+            @foreach (var medic in Model.medics)
+            {
+                <tr>
+                    <td>@medic.Name</td>
+                    <td>@medic.Id</td>
+                </tr>
+            }
+        </table>
+        Total Medics :<b class="text-info"> @Model.medics.Count</b>
+    </div>
+    <div class="col-sm-4">
+        <h4>Patients</h4>
+        <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Id</th>
+                </tr>
+            </thead>
+            @foreach (var patient in Model.patients)
+            {
+                <tr>
+                    <td>@patient.Name</td>
+                    <td>@patient.Id</td>
+                </tr>
+            }
+        </table>
+        Total Patients :<b class="text-info"> @Model.patients.Count</b>
+    </div>
 
+</div>

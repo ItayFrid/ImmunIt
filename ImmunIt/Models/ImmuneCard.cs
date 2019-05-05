@@ -13,12 +13,13 @@ namespace ImmunIt.Models
         {
             this.Vaccines = new List<Vaccine>();
         }
-        [ForeignKey("Patient")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string ImmuneCardId { get; set; }
 
-        //public virtual ICollection<Vaccine> Vaccines { get; set; }
+        [Key]
+        public string patientId { get; set; }
+        
+
         public List<Vaccine> Vaccines { get; set; }
-        public virtual Patient Patient { get; set; }
+
+        
     }
 }
