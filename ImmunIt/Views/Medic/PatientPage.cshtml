@@ -8,6 +8,32 @@
 
 <h4>@Model.Name</h4> <small>[@Model.Id]</small>
 
+                     <div class="col-sm-4">
+                         <h4>Vaccines</h4>
+                         <table class="table table-bordered table-sm">
+                             <thead class="thead-light">
+                                 <tr>
+                                     <th>Name</th>
+                                     <th>Description</th>
+                                     <th>Date Given</th>
+                                     <th>Date Expires</th>
+                                 </tr>
+                             </thead>
+                             @foreach (var vaccine in Model.card.Vaccines)
+                             {
+                                 <tr>
+                                     <td>@vaccine.Name</td>
+                                     <td>@vaccine.description</td>
+                                     <td>@vaccine.DateGiven</td>
+                                     <td bgcolor ="@vaccine.getExpiredColor()">@vaccine.DateExpired</td>
+                                 </tr>
+                             }
+                         </table>
+                         Total Vaccines :<b class="text-info"> @Model.users.Count</b>
+                     </div>
+<br />
+<br />
+
 <ul class="list-group text-center">
     <li class="list-group-item">
         <form action="NewVaccine" method="post">
