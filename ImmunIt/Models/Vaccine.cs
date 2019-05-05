@@ -14,9 +14,9 @@ namespace ImmunIt.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
-        public ImmuneCard card { get; set; }
+        public virtual ImmuneCard card { get; set; }
 
-        public Medic medic { get; set; }
+        public virtual Medic medic { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Vaccine Name must be between 3-50 characters")]
@@ -31,6 +31,13 @@ namespace ImmunIt.Models
         {
             if (this.DateExpired < DateTime.Now)
                 return "text-danger";
+            return "";
+        }
+
+        public string getExpiredBGColor()
+        {
+            if (this.DateExpired < DateTime.Now)
+                return "red";
             return "";
         }
     }

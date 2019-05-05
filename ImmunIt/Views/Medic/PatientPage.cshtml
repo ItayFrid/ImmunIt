@@ -25,11 +25,11 @@
                                      <td>@vaccine.Name</td>
                                      <td>@vaccine.description</td>
                                      <td>@vaccine.DateGiven</td>
-                                     <td bgcolor ="@vaccine.getExpiredColor()">@vaccine.DateExpired</td>
+                                     <td bgcolor ="@vaccine.getExpiredBGColor()">@vaccine.DateExpired</td>
                                  </tr>
                              }
                          </table>
-                         Total Vaccines :<b class="text-info"> @Model.users.Count</b>
+                         Total Vaccines :<b class="text-info"> @Model.card.Vaccines.Count</b>
                      </div>
 <br />
 <br />
