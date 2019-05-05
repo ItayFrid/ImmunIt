@@ -12,6 +12,7 @@ using System.Web.Security;
 
 namespace ImmunIt.Controllers
 {
+    //[Authorize(Roles = "Manager")]
     public class ManagerController : Controller
     {
         // GET: Manager

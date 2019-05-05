@@ -61,17 +61,7 @@ namespace ImmunIt.Controllers
             return json;
         }
 
-
-        public ActionResult AddVaccine()
-        {
-            
-
-            Vaccine vacc = new Vaccine();
-
-            return View("AddVaccine", vacc/*card[0]*/);
-        }
-
-        public ActionResult NewVaccine(Vaccine vacc)
+        public ActionResult AddVaccine(Vaccine vacc)
         {
             
             string pId = Request.Form["patientId"], mId = Request.Form["medicId"];
@@ -93,13 +83,14 @@ namespace ImmunIt.Controllers
                 card[0].Vaccines.Add(vacc);
                 ViewBag.message = "Vaccine added succesfully.";
                 dal.SaveChanges();
-                vacc = new Vaccine();
+                
             }
             else
             {
                 ViewBag.message = "Invalid vaccine information.";
             }
 
+            vacc = new Vaccine();
             return View("AddVaccine", vacc);
         }
 

@@ -3,13 +3,27 @@
     ViewBag.Title = "PatientPage";
 }
 
-<h2>PatientPage</h2>
+<h2>Patient Page</h2>
 <hr />
+<h4>Patient's details</h4>
+<br />
+<h3>Name: @Model.Name</h3>
+<br />
+<h3>ID: @Model.Id</h3>
+<br />
+<h3>Blood type: @Model.BloodType</h3>
+<br />
+<h3>Allergies: @Model.MedicineAllergy</h3>
+<br />
+<h3>Chronic disease: @Model.ChronicDiseases</h3>
 
-<h4>@Model.Name</h4> <small>[@Model.Id]</small>
+<br />
+<hr />
+<h4>Immune Card</h4>
+<br />
 
                      <div class="col-sm-4">
-                         <h4>Vaccines</h4>
+                         <h3>Vaccines</h3>
                          <table class="table table-bordered table-sm">
                              <thead class="thead-light">
                                  <tr>
@@ -36,7 +50,7 @@
 
 <ul class="list-group text-center">
     <li class="list-group-item">
-        <form action="NewVaccine" method="post">
+        <form action="AddVaccine" method="post">
             <input name="patientId" type="hidden" value="@Model.Id" />
             <input name="medicId" type="hidden" value="@User.Identity.Name" />
             <input type="submit" class="btn btn-outline-primary" value="Add Vaccine" />

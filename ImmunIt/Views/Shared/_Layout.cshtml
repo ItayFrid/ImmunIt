@@ -8,11 +8,28 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <ul class="list-group text-center">
-        <li class="list-group-item">
-            <a href="@Url.Action("UserLogin", "Login")">Login</a>
-        </li>
+
+
+    <ul class="list-group-item-primary">
+        <!--<ul class="list-group text-center">-->
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li class="list-group-item">
+                <a href="@Url.Action("LogOut", "Login")">Logout</a>
+            </li>
+        }
+        else
+        {
+            <li class="list-group-item">
+                <a href="@Url.Action("UserLogin", "Login")">Login</a>
+            </li>
+        }
+
     </ul>
+
+
+
+
     <div class="container body-content">
         @RenderBody()
         <hr />
