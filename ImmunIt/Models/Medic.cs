@@ -13,5 +13,14 @@ namespace ImmunIt.Models
         [StringLength(5, MinimumLength = 5, ErrorMessage = "License Number must be  5 characters")]
         public string LicenseNumber { get; set; }
 
+
+        [Required]
+        [EmailAddress]
+        public string email { get; set; }
+
+        public bool isEmailVerified { get; set; }
+
+        public Guid ActivationCode { get; set; }
+
     }
 }

@@ -24,6 +24,5 @@ namespace ImmunIt.Models
 
         [Required]
         public string role { get; set; }
-
     }
 }

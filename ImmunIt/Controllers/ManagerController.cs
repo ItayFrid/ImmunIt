@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -77,6 +80,9 @@ namespace ImmunIt.Controllers
                 if (!userExists(medic.Id))     //Adding user to database
                 {
                     medic.Password = hashedPassword;
+                    medic.isEmailVerified = false;
+                    medic.ActivationCode = Guid.NewGuid();
+                    SendVerification(medic.email,medic.ActivationCode.ToString());
                     dal.medics.Add(medic);
                     dal.SaveChanges();
                     
@@ -116,6 +122,36 @@ namespace ImmunIt.Controllers
                         select x).ToList<User>();
 
             return View(vm);
+        }
+        [NonAction]
+        private void SendVerification(string email,string activationCode)
+        {
+            var verifyUrl = "/Home/VerifyAccount/" + activationCode;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
+            string subject = "Registration Verification - ImmUnit";
+            string body = "To finish the registration please click the link<br/>"+
+                "<a href='"+link+"'>"+link+"</a>";
+            SendEmail(email, subject, body);
+        }
+        [NonAction]
+        private void SendEmail(string toEmail, string subject, string body)
+        {
+            string sender = "immunit7@gmail.com";
+            string password = "fitay123";
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                EnableSsl = true,
+                Timeout = 10000,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(sender, password)
+            };
+            MailMessage msg = new MailMessage(sender, toEmail, subject, body)
+            {
+                IsBodyHtml = true,
+                BodyEncoding = UTF8Encoding.UTF8
+            };
+            client.Send(msg);
         }
 
 

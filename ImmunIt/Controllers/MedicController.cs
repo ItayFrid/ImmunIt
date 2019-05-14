@@ -18,7 +18,11 @@ namespace ImmunIt.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            DataLayer dal = new DataLayer();
+            Medic medic = (from x in dal.medics
+                           where x.Id == User.Identity.Name
+                           select x).ToList<Medic>()[0];
+            return View(medic);
         }
 
 

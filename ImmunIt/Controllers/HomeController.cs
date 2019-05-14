@@ -46,6 +46,20 @@ namespace ImmunIt.Controllers
         {
             return View();
         }
-
+        [HttpGet]
+        public ActionResult VerifyAccount(string id)
+        {
+            Guid guid = new Guid(id);
+            DataLayer dal = new DataLayer();
+            Medic user = (from x in dal.medics
+                          where x.ActivationCode == guid
+                          select x).ToList<Medic>()[0];
+            if (user != null)
+            {
+                user.isEmailVerified = true;
+                dal.SaveChanges();
+            }
+            return View(user);
+        }
     }
 }

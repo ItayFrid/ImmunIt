@@ -74,6 +74,8 @@ namespace ImmunIt.Controllers
             return View("UserLogin", user);
         }
 
+        
+
         /*This function handles signing out*/
         public ActionResult LogOut()
         {

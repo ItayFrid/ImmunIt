@@ -1,14 +1,24 @@
-﻿@model ImmunIt.Models.VaccineJson
+﻿@model ImmunIt.Models.Medic
 @{
     ViewBag.Title = "Index";
 }
 <h2>Medic Index</h2>
 <hr />
-<ul class="list-group text-center">
-    <li class="list-group-item">
-        <a href="@Url.Action("WatchVaccineInfo", "Medic")">Watch Vaccines Info</a>
-    </li>
-    <li class="list-group-item">
-        <a href="@Url.Action("SearchPatient", "Medic")">Search Patient</a>
-    </li>
-</ul>
+@if (Model.isEmailVerified)
+{
+    <ul class="list-group text-center">
+        <li class="list-group-item">
+            <a href="@Url.Action("WatchVaccineInfo", "Medic")">Watch Vaccines Info</a>
+        </li>
+        <li class="list-group-item">
+            <a href="@Url.Action("SearchPatient", "Medic")">Search Patient</a>
+        </li>
+    </ul>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Dear <strong>@Model.Name</strong>.<br />
+        Please validate your email!<br />
+    </div>
+}
