@@ -3,5 +3,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
+<h2>Manager Index</h2>
+<ul class="list-group-item-primary">
+    <li class="list-group-item">
+        <a href="@Url.Action("AddPatient", "Manager")">Add Patient</a>
+    </li>
+    <li class="list-group-item">
+        <a href="@Url.Action("AddMedic", "Manager")">Add Medic</a>
+    </li>
+    <li class="list-group-item">
+        <a href="@Url.Action("ViewAllUsers", "Manager")">View All Users</a>
+    </li>
+</ul>

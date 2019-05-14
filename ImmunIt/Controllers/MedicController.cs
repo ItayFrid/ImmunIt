@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 namespace ImmunIt.Controllers
 {
 
-    //[Authorize(Roles = "Medic")]
+    [Authorize(Roles = "Medic")]
     public class MedicController : Controller
     {
         public ActionResult Index()
@@ -60,38 +60,46 @@ namespace ImmunIt.Controllers
             List<VaccineJson> json = JsonConvert.DeserializeObject<List<VaccineJson>>(vaccineJson);
             return json;
         }
-
-        public ActionResult AddVaccine(Vaccine vacc)
+        public ActionResult Vaccine()
         {
-            
-            string pId = Request.Form["patientId"], mId = Request.Form["medicId"];
+            string pId = Request.Form["patientId"];
+            ViewModel vm = new ViewModel();
             DataLayer dal = new DataLayer();
-            
+            vm.vaccine = new Vaccine();
+            vm.patient = new Patient();
+            vm.patient = (from x in dal.patients
+                          where x.Id == pId
+                          select x).ToList<Patient>()[0];
+            return View("AddVaccine", vm);
+        }
+        public ActionResult AddVaccine(ViewModel vm)
+        {
+            DataLayer dal = new DataLayer();
+            string pId = Request.Form["patientId"], mId = User.Identity.Name;
             List<ImmuneCard> card = (from x in dal.ImmuneCards
-                                     where x.patientId == pId
-                                     select x).ToList<ImmuneCard>();
-
+                                        where x.patientId == pId
+                                        select x).ToList<ImmuneCard>();
             List<Medic> medic = (from x in dal.medics
                                      where x.Id == User.Identity.Name
                                      select x).ToList<Medic>();
 
+            vm.patient = (from x in dal.patients
+                          where x.Id == pId
+                          select x).ToList<Patient>()[0];
             if (ModelState.IsValid)
             {
-                vacc.card = card[0];
-                vacc.medic = medic[0];
-
-                card[0].Vaccines.Add(vacc);
+                vm.patient.card.Vaccines.Add(vm.vaccine);
+                vm.vaccine.card = vm.patient.card;
+                vm.vaccine.medic = medic[0];
                 ViewBag.message = "Vaccine added succesfully.";
                 dal.SaveChanges();
-                
+                return View("PatientPage",vm.patient);
             }
             else
             {
                 ViewBag.message = "Invalid vaccine information.";
+                return View("AddVaccine", vm);
             }
-
-            vacc = new Vaccine();
-            return View("AddVaccine", vacc);
         }
 
     }

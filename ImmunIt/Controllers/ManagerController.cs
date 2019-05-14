@@ -32,19 +32,19 @@ namespace ImmunIt.Controllers
         public ActionResult PatientRegister(Patient patient)
         {
             DataLayer dal = new DataLayer();
-            Encryption enc = new Encryption();
+            TripleDES des = new TripleDES();
             if (ModelState.IsValid)
             {
-                string hashedPassword = enc.CreateHash(patient.Password);      //Encrypting user's password
+                string hashedPassword = des.TripleEncrypt(patient.Password);      //Encrypting user's password
                 if (!userExists(patient.Id))     //Adding user to database
                 {
-                    ImmuneCard icard = new ImmuneCard { patientId = patient.Id };
-                    patient.card = icard;
+                    patient.card = new ImmuneCard
+                    {
+                        patientId = patient.Id,
+                        Vaccines = new List<Vaccine>()
+                    };
                     patient.Password = hashedPassword;
-
-                    
-
-                    dal.ImmuneCards.Add(icard);
+                    dal.ImmuneCards.Add(patient.card);
                     dal.patients.Add(patient);
                     dal.SaveChanges();
                     ViewBag.message = "Patient was added succesfully.";
@@ -70,11 +70,10 @@ namespace ImmunIt.Controllers
         public ActionResult MedicRegister(Medic medic)
         {
             DataLayer dal = new DataLayer();
-            Encryption enc = new Encryption();
-
+            TripleDES des = new TripleDES();
             if (ModelState.IsValid)
             {
-                string hashedPassword = enc.CreateHash(medic.Password);      //Encrypting user's password
+                string hashedPassword = des.TripleEncrypt(medic.Password);      //Encrypting user's password
                 if (!userExists(medic.Id))     //Adding user to database
                 {
                     medic.Password = hashedPassword;

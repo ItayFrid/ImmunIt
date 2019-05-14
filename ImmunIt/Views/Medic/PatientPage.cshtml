@@ -38,7 +38,7 @@
                                  <tr>
                                      <td>@vaccine.Name</td>
                                      <td>@vaccine.description</td>
-                                     <td>@vaccine.DateGiven</td>
+                                     <td>@vaccine.DateGiven.Date</td>
                                      <td bgcolor ="@vaccine.getExpiredBGColor()">@vaccine.DateExpired</td>
                                  </tr>
                              }
@@ -50,7 +50,7 @@
 
 <ul class="list-group text-center">
     <li class="list-group-item">
-        <form action="AddVaccine" method="post">
+        <form action="Vaccine" method="post">
             <input name="patientId" type="hidden" value="@Model.Id" />
             <input name="medicId" type="hidden" value="@User.Identity.Name" />
             <input type="submit" class="btn btn-outline-primary" value="Add Vaccine" />

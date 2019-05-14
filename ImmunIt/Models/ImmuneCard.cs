@@ -18,7 +18,7 @@ namespace ImmunIt.Models
         public string patientId { get; set; }
         
 
-        public List<Vaccine> Vaccines { get; set; }
+        public virtual ICollection<Vaccine> Vaccines { get; set; }
 
         
     }

@@ -399,8 +399,6 @@ namespace ImmunIt.Classes
             {
                 Cipher = Encrypt(Cipher, HexStringToString(list[i]));
             }
-            Console.WriteLine(Cipher);
-            Console.WriteLine(list[0]);
             return Cipher == list[0];
         }
     }
@@ -414,5 +412,4 @@ namespace ImmunIt.Classes
             right = r;
         }
     }
-}
 }

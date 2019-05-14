@@ -10,7 +10,7 @@ using System.Web.Security;
 
 namespace ImmunIt.Controllers
 {
-    //[Authorize(Roles = "Patient")]
+    [Authorize(Roles = "Patient")]
     public class PatientController : Controller
     {
         // GET: Patient
