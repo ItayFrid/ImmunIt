@@ -5,56 +5,56 @@
 
 <h2>Patient Page</h2>
 <hr />
-<h4>Patient's details</h4>
-<br />
-<h3>Name: @Model.Name</h3>
-<br />
-<h3>ID: @Model.Id</h3>
-<br />
-<h3>Blood type: @Model.BloodType</h3>
-<br />
-<h3>Allergies: @Model.MedicineAllergy</h3>
-<br />
-<h3>Chronic disease: @Model.ChronicDiseases</h3>
 
-<br />
-<hr />
-<h4>Immune Card</h4>
-<br />
-
-                     <div class="col-sm-4">
-                         <h3>Vaccines</h3>
-                         <table class="table table-bordered table-sm">
-                             <thead class="thead-light">
-                                 <tr>
-                                     <th>Name</th>
-                                     <th>Description</th>
-                                     <th>Date Given</th>
-                                     <th>Date Expires</th>
-                                 </tr>
-                             </thead>
-                             @foreach (var vaccine in Model.card.Vaccines)
-                             {
-                                 <tr>
-                                     <td>@vaccine.Name</td>
-                                     <td>@vaccine.description</td>
-                                     <td>@vaccine.DateGiven.Date</td>
-                                     <td bgcolor ="@vaccine.getExpiredBGColor()">@vaccine.DateExpired</td>
-                                 </tr>
-                             }
-                         </table>
-                         Total Vaccines :<b class="text-info"> @Model.card.Vaccines.Count</b>
-                     </div>
-<br />
-<br />
-
-<ul class="list-group text-center">
-    <li class="list-group-item">
+<div class="row">
+    <div class="col-6 text-center">
+        <h3>Vaccines</h3>
+        <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Date Given</th>
+                    <th>Date Expires</th>
+                </tr>
+            </thead>
+            @foreach (var vaccine in Model.card.Vaccines)
+            {
+                <tr>
+                    <td>@vaccine.Name</td>
+                    <td>@vaccine.description</td>
+                    <td>@vaccine.DateGiven.Day.@vaccine.DateGiven.Month.@vaccine.DateGiven.Year</td>
+                    <td bgcolor="@vaccine.getExpiredBGColor()">
+                        @vaccine.DateExpired.Day.@vaccine.DateExpired.Month.@vaccine.DateExpired.Year
+                    </td>
+                </tr>
+            }
+        </table>
+        Total Vaccines :<b class="text-info"> @Model.card.Vaccines.Count</b>
+        <hr />
         <form action="Vaccine" method="post">
             <input name="patientId" type="hidden" value="@Model.Id" />
             <input name="medicId" type="hidden" value="@User.Identity.Name" />
             <input type="submit" class="btn btn-outline-primary" value="Add Vaccine" />
         </form>
-
-    </li>
-</ul>
+    </div>
+    <div class="col-6">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <strong>Name:</strong> @Model.Name
+            </li>
+            <li class="list-group-item">
+                <strong>ID:</strong> @Model.Id
+            </li>
+            <li class="list-group-item">
+                <strong>Blood Type:</strong> @Model.BloodType
+            </li>
+            <li class="list-group-item">
+                <strong>Allergies:</strong> @Model.MedicineAllergy
+            </li>
+            <li class="list-group-item">
+                <strong>Chronic Diseases:</strong> @Model.ChronicDiseases
+            </li>
+        </ul>
+    </div>
+</div>
