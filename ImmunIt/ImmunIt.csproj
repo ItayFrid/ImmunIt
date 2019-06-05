@@ -134,6 +134,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Classes\AES.cs" />
     <Compile Include="Classes\Encryption.cs" />
     <Compile Include="Classes\TripleDES.cs" />
     <Compile Include="Controllers\FirstAidController.cs" />

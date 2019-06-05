@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Newtonsoft.Json;
+using ImmunIt.Classes;
 
 namespace ImmunIt.Controllers
 {
@@ -60,8 +61,14 @@ namespace ImmunIt.Controllers
 
         public List<VaccineJson> getVaccines()
         {
-            string vaccineJson = new WebClient().DownloadString("https://itayfrid.000webhostapp.com/vaccines.json");
+            AES aes = new AES();
+            string vaccineJson = new WebClient().DownloadString("https://immunit.000webhostapp.com/vaccines.json");
             List<VaccineJson> json = JsonConvert.DeserializeObject<List<VaccineJson>>(vaccineJson);
+            foreach(VaccineJson vacc in json)
+            {
+                vacc.Name = aes.Decrypt(vacc.Name);
+                vacc.Description = aes.Decrypt(vacc.Description);
+            }
             return json;
         }
         public ActionResult Vaccine()
