@@ -32,14 +32,17 @@ namespace ImmunIt.Controllers
         {
 
             DataLayer dal = new DataLayer();
-            Encryption enc = new Encryption();
             TripleDES des = new TripleDES();
             List<User> userToCheck = (from x in dal.users
-                                      where x.Id == user.Id
                                       select x).ToList<User>();       //Attempting to get user information from database
-            if (userToCheck.Count != 0)     //In case username was found
+            User usrToCheck = null;
+            for(int i = 0; i < userToCheck.Count; i++)
+                if (AES.Decrypt(userToCheck[i].Id) == user.Id)
+                    usrToCheck = AES.DecryptUser(userToCheck[i]);
+
+            if (usrToCheck != null)     //In case username was found
             {
-                if (des.isValid(userToCheck[0].Password, user.Password))   //Correct password
+                if (des.isValid(usrToCheck.Password, user.Password))   //Correct password
                 {
                     var authTicket = new FormsAuthenticationTicket(
                         1,                                  // version
@@ -47,7 +50,7 @@ namespace ImmunIt.Controllers
                         DateTime.Now,                       // created
                         DateTime.Now.AddMinutes(20),        // expires
                         true,                               //keep me connected
-                        userToCheck[0].role                 // store roles
+                        usrToCheck.role                 // store roles
                         );
 
                     string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
@@ -55,10 +58,10 @@ namespace ImmunIt.Controllers
                     var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                     Response.Cookies.Add(authCookie);
 
-                    if (userToCheck[0].role.Equals("Manager"))
+                    if (usrToCheck.role.Equals("Manager"))
                         return RedirectToAction("Index", "Manager");
 
-                    else if (userToCheck[0].role.Equals("Medic"))
+                    else if (usrToCheck.role.Equals("Medic"))
                         return RedirectToAction("Index", "Medic");
 
                     else

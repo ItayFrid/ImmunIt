@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
+//TODO:Add Manager Register
 namespace ImmunIt.Controllers
 {
     //[Authorize(Roles = "Manager")]
@@ -21,7 +22,6 @@ namespace ImmunIt.Controllers
         // GET: Manager
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -47,7 +47,9 @@ namespace ImmunIt.Controllers
                         Vaccines = new List<Vaccine>()
                     };
                     patient.Password = hashedPassword;
+                    patient = AES.EncryptPatient(patient);
                     dal.ImmuneCards.Add(patient.card);
+                    patient.card.patientId = patient.Id;
                     dal.patients.Add(patient);
                     dal.SaveChanges();
                     ViewBag.message = "Patient was added succesfully.";
@@ -83,6 +85,7 @@ namespace ImmunIt.Controllers
                     medic.isEmailVerified = false;
                     medic.ActivationCode = Guid.NewGuid();
                     SendVerification(medic.email,medic.ActivationCode.ToString());
+                    medic = AES.EncryptMedic(medic);
                     dal.medics.Add(medic);
                     dal.SaveChanges();
                     
@@ -102,6 +105,7 @@ namespace ImmunIt.Controllers
         {
             DataLayer dal = new DataLayer();
             List<User> users = dal.users.ToList<User>();
+            users = AES.DecryptUserList(users);
             foreach (User user in dal.users)
                 if (user.Id.Equals(id))
                     return true;
@@ -113,14 +117,13 @@ namespace ImmunIt.Controllers
             ViewModel vm = new ViewModel();
             DataLayer dal = new DataLayer();
 
-            vm.patients = (from x in dal.patients
-                           select x).ToList<Patient>();
-            vm.medics = (from x in dal.medics
-                           select x).ToList<Medic>();
-            vm.users = (from x in dal.users
-                        where x.role == "Manager"
-                        select x).ToList<User>();
-
+            vm.patients = AES.DecryptPatientList((from x in dal.patients
+                                                  select x).ToList<Patient>());
+            vm.medics = AES.DecryptMedicList((from x in dal.medics
+                                              select x).ToList<Medic>());
+            vm.users = AES.DecryptUserList((from x in dal.users
+                                            where x.role == "Manager"
+                                            select x).ToList<User>());
             return View(vm);
         }
         [NonAction]
@@ -153,8 +156,5 @@ namespace ImmunIt.Controllers
             };
             client.Send(msg);
         }
-
-
     }
-   
 }

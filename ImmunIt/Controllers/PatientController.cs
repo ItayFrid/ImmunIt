@@ -1,4 +1,5 @@
-﻿using ImmunIt.Classes;
+﻿
+using ImmunIt.Classes;
 using ImmunIt.DAL;
 using ImmunIt.Models;
 using System;
@@ -28,15 +29,15 @@ namespace ImmunIt.Controllers
         {
             DataLayer dal = new DataLayer();
             //Getting current patient refrence
-            List<Patient> patient = (from x in dal.patients
-                                      where x.Id == User.Identity.Name
+            List<Patient> patients = (from x in dal.patients
                                       select x).ToList<Patient>();
-
-
-
-            return View(patient[0]);
+            Patient patient = null;
+            foreach (Patient p in patients)
+                if (AES.Decrypt(p.Id) == User.Identity.Name)
+                    patient = p;
+            patient = AES.DecryptPatient(patient);
+            //TODO Decrypt Medic Name
+            return View(patient);
         }
-
-   
     }
 }

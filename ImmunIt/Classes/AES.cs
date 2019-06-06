@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImmunIt.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,10 @@ using System.Web;
 
 namespace ImmunIt.Classes
 {
-    public class AES
+    public static class AES
     {
         //Fields
-        private byte[,] sBox = {
+        private static byte[,] sBox = {
             { 0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76 },
             { 0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0},
             { 0xb7, 0xfd, 0x93, 0x26, 0x36, 0x3f, 0xf7, 0xcc, 0x34, 0xa5, 0xe5, 0xf1, 0x71, 0xd8, 0x31, 0x15},
@@ -27,7 +28,7 @@ namespace ImmunIt.Classes
             { 0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf},
             { 0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16},
         };
-        private byte[,] invSBox = {
+        private static byte[,] invSBox = {
             { 0x52, 0x09, 0x6A, 0xD5, 0x30, 0x36, 0xA5, 0x38, 0xBF, 0x40, 0xA3, 0x9E, 0x81, 0xF3, 0xD7, 0xFB },
             { 0x7C, 0xE3, 0x39, 0x82, 0x9B, 0x2F, 0xFF, 0x87, 0x34, 0x8E, 0x43, 0x44, 0xC4, 0xDE, 0xE9, 0xCB },
             { 0x54, 0x7B, 0x94, 0x32, 0xA6, 0xC2, 0x23, 0x3D, 0xEE, 0x4C, 0x95, 0x0B, 0x42, 0xFA, 0xC3, 0x4E },
@@ -45,11 +46,11 @@ namespace ImmunIt.Classes
             { 0xA0, 0xE0, 0x3B, 0x4D, 0xAE, 0x2A, 0xF5, 0xB0, 0xC8, 0xEB, 0xBB, 0x3C, 0x83, 0x53, 0x99, 0x61 },
             { 0x17, 0x2B, 0x04, 0x7E, 0xBA, 0x77, 0xD6, 0x26, 0xE1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0C, 0x7D }
         };
-        private byte[] RS = {
+        private static byte[] RS = {
             0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36
         };
         //Casting Methods
-        private int HexCharToInt(char c)
+        private static int HexCharToInt(char c)
         {
             switch (c)
             {
@@ -94,7 +95,7 @@ namespace ImmunIt.Classes
                     return 0;
             }
         }
-        private byte[,] StringToByte(string text)
+        private static byte[,] StringToByte(string text)
         {
             int i, j;
             //Add Padding to the end of the block
@@ -114,7 +115,7 @@ namespace ImmunIt.Classes
             }
             return byteArray;
         }
-        private string ByteArrayToString(byte[,] byteText)
+        private static string ByteArrayToString(byte[,] byteText)
         {
             string s = "";
             for (int i = 0; i < 4; i++)
@@ -126,7 +127,7 @@ namespace ImmunIt.Classes
                 }
             return s;
         }
-        private byte[,] StringToByteArray(string text)
+        private static byte[,] StringToByteArray(string text)
         {
             List<string> arr = text.Select((x, i) => i)
                                     .Where(i => i % 2 == 0)
@@ -148,7 +149,7 @@ namespace ImmunIt.Classes
 
             return byteText;
         }
-        private string HextoString(string InputText)
+        private static string HextoString(string InputText)
         {
             InputText = InputText.Replace(',', '0');
             byte[] bb = Enumerable.Range(0, InputText.Length)
@@ -157,7 +158,7 @@ namespace ImmunIt.Classes
                              .ToArray();
             return System.Text.Encoding.ASCII.GetString(bb);
         }
-        private string RandomKey(int size)
+        private static string RandomKey(int size)
         {
             StringBuilder builder = new StringBuilder();
             Random random = new Random();
@@ -170,7 +171,7 @@ namespace ImmunIt.Classes
             return builder.ToString();
         }
 
-        private byte[,] XOR(byte[,] b1, byte[,] b2)
+        private static byte[,] XOR(byte[,] b1, byte[,] b2)
         {
             byte[,] newB = new byte[4, 4];
             for (int i = 0; i < 4; i++)
@@ -182,14 +183,14 @@ namespace ImmunIt.Classes
             return newB;
         }
 
-        private byte[,] ColumnXOR(byte[,] byteKey, int i1, int i2)
+        private static byte[,] ColumnXOR(byte[,] byteKey, int i1, int i2)
         {
             for (int j = 0; j < 4; j++)
                 byteKey[j, i1] = (byte)(byteKey[j, i1] ^ byteKey[j, i2]);
             return byteKey;
         }
 
-        private byte[,] S(byte[,] byteText)
+        private static byte[,] S(byte[,] byteText)
         {
             byte[,] b = new byte[4, 4];
             for (int i = 0; i < 4; i++)
@@ -200,7 +201,7 @@ namespace ImmunIt.Classes
             return b;
         }
 
-        private byte[,] invS(byte[,] byteText)
+        private static byte[,] invS(byte[,] byteText)
         {
             byte[,] b = new byte[4, 4];
             for (int i = 0; i < 4; i++)
@@ -211,7 +212,7 @@ namespace ImmunIt.Classes
             return b;
         }
 
-        private byte sPhase(byte b)
+        private static byte sPhase(byte b)
         {
             int iS, jS;
             //Getting HexValue
@@ -229,7 +230,7 @@ namespace ImmunIt.Classes
             return sBox[iS, jS];
         }
 
-        private byte invSPhase(byte b)
+        private static byte invSPhase(byte b)
         {
             int iS, jS;
             //Getting HexValue
@@ -247,7 +248,7 @@ namespace ImmunIt.Classes
             return invSBox[iS, jS];
         }
 
-        private byte[,] LeftShift(byte[,] byteText, int i)
+        private static byte[,] LeftShift(byte[,] byteText, int i)
         {
             byte temp = byteText[i, 0];
             for (int j = 0; j < 3; j++)
@@ -256,7 +257,7 @@ namespace ImmunIt.Classes
             return byteText;
         }
 
-        private byte[,] RightShift(byte[,] byteText, int i)
+        private static byte[,] RightShift(byte[,] byteText, int i)
         {
             byte temp = byteText[i, 3];
             for (int j = 3; j > 0; j--)
@@ -265,7 +266,7 @@ namespace ImmunIt.Classes
             return byteText;
         }
 
-        private byte[,] RightShiftRow(byte[,] byteText)
+        private static byte[,] RightShiftRow(byte[,] byteText)
         {
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < i; j++)
@@ -273,7 +274,7 @@ namespace ImmunIt.Classes
             return byteText;
         }
 
-        private byte[,] LeftShiftRow(byte[,] byteText)
+        private static byte[,] LeftShiftRow(byte[,] byteText)
         {
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < i; j++)
@@ -281,7 +282,7 @@ namespace ImmunIt.Classes
             return byteText;
         }
 
-        private byte GMul(byte a, byte b)
+        private static byte GMul(byte a, byte b)
         { // Galois Field (256) Multiplication of two Bytes
             byte p = 0;
             for (int counter = 0; counter < 8; counter++)
@@ -297,7 +298,7 @@ namespace ImmunIt.Classes
             return p;
         }
 
-        private byte[,] MixColumns(byte[,] s)
+        private static byte[,] MixColumns(byte[,] s)
         {
             byte[,] ss = new byte[4, 4];
             for (int c = 0; c < 4; c++)
@@ -310,7 +311,7 @@ namespace ImmunIt.Classes
             return ss;
         }
 
-        private byte[,] invMixColumns(byte[,] s)
+        private static byte[,] invMixColumns(byte[,] s)
         {
             byte[,] ss = new byte[4, 4];
             for (int c = 0; c < 4; c++)
@@ -338,7 +339,7 @@ namespace ImmunIt.Classes
             return ss;
         }
 
-        private byte[,] G(byte[,] byteKey, int i, int iRS)
+        private static byte[,] G(byte[,] byteKey, int i, int iRS)
         {
             byte[,] newG = new byte[4, 4];
             //switch Locations
@@ -353,7 +354,7 @@ namespace ImmunIt.Classes
             return newG;
         }
 
-        private byte[,] KeyScedule(byte[,] byteKey, int i)
+        private static byte[,] KeyScedule(byte[,] byteKey, int i)
         {
             byteKey = G(byteKey, 3, i);
             byteKey = ColumnXOR(byteKey, 0, 3);
@@ -363,7 +364,7 @@ namespace ImmunIt.Classes
             return byteKey;
         }
 
-        private byte[,,] ComputeCipherKey(string key)
+        private static byte[,,] ComputeCipherKey(string key)
         {
             //TODO: check Error
             byte[,,] keys = new byte[11, 4, 4];
@@ -379,7 +380,7 @@ namespace ImmunIt.Classes
             return keys;
         }
 
-        private byte[,] GetSingleKey(byte[,,] keys, int i)
+        private static byte[,] GetSingleKey(byte[,,] keys, int i)
         {
             byte[,] key = new byte[4, 4];
             for (int j = 0; j < 4; j++)
@@ -388,7 +389,7 @@ namespace ImmunIt.Classes
             return key;
         }
 
-        private string EncryptSingleBlock(string text, string key)
+        private static string EncryptSingleBlock(string text, string key)
         {
             //Casting Strings To 4x4 Bytes Array
             byte[,] byteText = StringToByte(text);
@@ -419,7 +420,7 @@ namespace ImmunIt.Classes
             return cipherText;
         }
 
-        private string DecryptSingleBlock(string cipherText, string Key)
+        private static string DecryptSingleBlock(string cipherText, string Key)
         {
             //PreComputing The Keys
             byte[,,] keys = ComputeCipherKey(Key);
@@ -452,7 +453,7 @@ namespace ImmunIt.Classes
             return HextoString(ByteArrayToString(byteText));
         }
 
-        public string Encrypt(string text)
+        public static string Encrypt(string text)
         {
             string cipherText = "";
             List<string> arr;
@@ -470,7 +471,7 @@ namespace ImmunIt.Classes
             return cipherText;
         }
 
-        public string Decrypt(string cipherText)
+        public static string Decrypt(string cipherText)
         {
             string text, key, plainText = "";
             List<string> arr;
@@ -486,13 +487,143 @@ namespace ImmunIt.Classes
             return TrimEnd(plainText);
         }
 
-        private string TrimEnd(string plainText)
+        private static string TrimEnd(string plainText)
         {
             char[] arr = plainText.ToCharArray();
             int i = arr.Length - 1, j = 0;
             while (arr[i] == '0') { j++; i--; }
             return plainText.Remove(plainText.Length - j);
         }
+        
+        //Classes Encryption
+        public static Medic EncryptMedic(Medic medic)
+        {
+            medic.Id            = Encrypt(medic.Id);
+            medic.LicenseNumber = Encrypt(medic.LicenseNumber);
+            medic.Name          = Encrypt(medic.Name);
+            medic.email         = Encrypt(medic.email);
+            return medic;
+        }
 
+        public static Manager EncryptManager(Manager manager)
+        {
+            manager.Id      = Encrypt(manager.Id);
+            manager.Name    = Encrypt(manager.Name);
+            return manager;
+        }
+
+        public static Patient EncryptPatient(Patient patient)
+        {
+            patient.BloodType       = Encrypt(patient.BloodType);
+            patient.ChronicDiseases = Encrypt(patient.ChronicDiseases);
+            patient.card            = EncryptCard(patient.card);
+            patient.Id              = Encrypt(patient.Id);
+            patient.MedicineAllergy = Encrypt(patient.MedicineAllergy);
+            patient.Name            = Encrypt(patient.Name);
+            return patient;
+        }
+
+        public static ImmuneCard EncryptCard(ImmuneCard card)
+        {
+            card.patientId = Encrypt(card.patientId);
+            return card;
+        }
+
+        public static Vaccine EncryptVaccine(Vaccine vaccine)
+        {
+            vaccine.description = Encrypt(vaccine.description);
+            vaccine.Name        = Encrypt(vaccine.Name);
+            return vaccine;
+        }
+
+        //Classes Decryption
+        public static User DecryptUser(User user)
+        {
+            user.Id     = Decrypt(user.Id);
+            user.Name   = Decrypt(user.Name);
+            return user;
+        }
+
+        public static Medic DecryptMedic(Medic medic)
+        {
+            medic.Id            = Decrypt(medic.Id);
+            medic.LicenseNumber = Decrypt(medic.LicenseNumber);
+            medic.Name          = Decrypt(medic.Name);
+            medic.email         = Decrypt(medic.email);
+            return medic;
+        }
+
+        public static Manager DecryptManager(Manager manager)
+        {
+            manager.Id      = Decrypt(manager.Id);
+            manager.Name    = Decrypt(manager.Name);
+            return manager;
+        }
+
+        public static Patient DecryptPatient(Patient patient)
+        {
+            patient.BloodType       = Decrypt(patient.BloodType);
+            patient.ChronicDiseases = Decrypt(patient.ChronicDiseases);
+            patient.card            = DecryptCard(patient.card);
+            patient.Id              = Decrypt(patient.Id);
+            patient.MedicineAllergy = Decrypt(patient.MedicineAllergy);
+            patient.Name            = Decrypt(patient.Name);
+            return patient;
+        }
+
+        public static ImmuneCard DecryptCard(ImmuneCard card)
+        {
+            card.patientId = Decrypt(card.patientId);
+            card.Vaccines = DecryptVaccineList(card.Vaccines);
+            return card;
+        }
+
+        public static Vaccine DecryptVaccine(Vaccine vaccine)
+        {
+            vaccine.description = Decrypt(vaccine.description);
+            vaccine.Name        = Decrypt(vaccine.Name);
+            return vaccine;
+        }
+
+        //DecryptLists
+        public static List<User> DecryptUserList(List<User> users)
+        {
+            List<User> DecUsers = new List<User>();
+            foreach (User user in users)
+                DecUsers.Add(DecryptUser(user));
+            return DecUsers;
+        }
+
+        public static List<Medic> DecryptMedicList(List<Medic> users)
+        {
+            List<Medic> DecMedics = new List<Medic>();
+            foreach (Medic medic in users)
+                DecMedics.Add(DecryptMedic(medic));
+            return DecMedics;
+        }
+
+        public static List<Manager> DecryptManagerList(List<Manager> managers)
+        {
+            List<Manager> DecManagers = new List<Manager>();
+            foreach (Manager manager in managers)
+                DecManagers.Add(DecryptManager(manager));
+            return DecManagers;
+        }
+
+        public static List<Patient> DecryptPatientList(List<Patient> patients)
+        {
+            List<Patient> DecPatients = new List<Patient>();
+            foreach (Patient patient in patients)
+                DecPatients.Add(DecryptPatient(patient));
+            return DecPatients;
+        }
+
+        public static ICollection<Vaccine> DecryptVaccineList(ICollection<Vaccine> vaccines)
+        {
+            List<Vaccine> DecVaccines = new List<Vaccine>();
+            foreach (Vaccine vaccine in vaccines)
+                DecVaccines.Add(DecryptVaccine(vaccine));
+            return DecVaccines;
+        }
     }
 }

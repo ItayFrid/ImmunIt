@@ -14,13 +14,13 @@
         <th>Expiration Date</th>
         <th>Given By</th>
     </tr>
-    @foreach ( Vaccine vaccine in Model.immunCard.Vaccines)
+    @foreach (Vaccine vaccine in Model.card.Vaccines)
     {
     <tr>
         <td>@vaccine.Name</td>
         <td>@vaccine.DateGiven</td>
         <td color="@vaccine.getExpiredColor()">@vaccine.DateExpired</td>
-        <td>@vaccine.Medic.Name</td>
+        <td>@vaccine.medic.Name)</td>
 
     </tr>
     }

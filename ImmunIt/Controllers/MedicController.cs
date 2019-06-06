@@ -20,9 +20,12 @@ namespace ImmunIt.Controllers
         public ActionResult Index()
         {
             DataLayer dal = new DataLayer();
-            Medic medic = (from x in dal.medics
-                           where x.Id == User.Identity.Name
-                           select x).ToList<Medic>()[0];
+            List<Medic> medics = (from x in dal.medics
+                                    select x).ToList<Medic>();
+            Medic medic = null;
+            foreach (Medic m in medics)
+                if (AES.Decrypt(m.Id) == User.Identity.Name)
+                    medic = AES.DecryptMedic(m);
             return View(medic);
         }
 
@@ -45,10 +48,13 @@ namespace ImmunIt.Controllers
             ViewModel vm = new ViewModel();
             string id = Request.Form["id"];
             List<Patient> patients = (from x in dal.patients
-                                      where x.Id == id
                                       select x).ToList<Patient>();
+            Patient patient = null;
+            foreach (Patient p in patients)
+                if (AES.Decrypt(p.Id) == id)
+                    patient = AES.DecryptPatient(p);
             if (patients.Count != 0)
-                return View("PatientPage", patients[0]);
+                return View("PatientPage", patient);
             ViewBag.Search = "Patient Not Found";
             return RedirectToAction("SearchPatient", "Medic");
         }
@@ -61,13 +67,12 @@ namespace ImmunIt.Controllers
 
         public List<VaccineJson> getVaccines()
         {
-            AES aes = new AES();
             string vaccineJson = new WebClient().DownloadString("https://immunit.000webhostapp.com/vaccines.json");
             List<VaccineJson> json = JsonConvert.DeserializeObject<List<VaccineJson>>(vaccineJson);
             foreach(VaccineJson vacc in json)
             {
-                vacc.Name = aes.Decrypt(vacc.Name);
-                vacc.Description = aes.Decrypt(vacc.Description);
+                vacc.Name = AES.Decrypt(vacc.Name);
+                vacc.Description = AES.Decrypt(vacc.Description);
             }
             return json;
         }
@@ -77,33 +82,43 @@ namespace ImmunIt.Controllers
             ViewModel vm = new ViewModel();
             DataLayer dal = new DataLayer();
             vm.vaccine = new Vaccine();
-            vm.patient = new Patient();
-            vm.patient = (from x in dal.patients
-                          where x.Id == pId
-                          select x).ToList<Patient>()[0];
+            vm.patients = (from x in dal.patients
+                           select x).ToList<Patient>();
+            foreach (Patient p in vm.patients)
+                if (AES.Decrypt(p.Id) == pId)
+                    vm.patient = AES.DecryptPatient(p);
             return View("AddVaccine", vm);
         }
         public ActionResult AddVaccine(ViewModel vm)
         {
             DataLayer dal = new DataLayer();
             string pId = Request.Form["patientId"], mId = User.Identity.Name;
-            List<ImmuneCard> card = (from x in dal.ImmuneCards
-                                        where x.patientId == pId
+            List<ImmuneCard> cards = (from x in dal.ImmuneCards
                                         select x).ToList<ImmuneCard>();
-            List<Medic> medic = (from x in dal.medics
-                                     where x.Id == User.Identity.Name
+            ImmuneCard card = null;
+            foreach (ImmuneCard c in cards)
+                if (AES.Decrypt(c.patientId) == pId)
+                    card = c;
+            List<Medic> medics = (from x in dal.medics
                                      select x).ToList<Medic>();
-
-            vm.patient = (from x in dal.patients
-                          where x.Id == pId
-                          select x).ToList<Patient>()[0];
+            Medic medic = null;
+            foreach (Medic m in medics)
+                if (AES.Decrypt(m.Id) == User.Identity.Name)
+                    medic = m;
+            vm.patients = (from x in dal.patients
+                          select x).ToList<Patient>();
+            foreach (Patient p in vm.patients)
+                if (AES.Decrypt(p.Id) == pId)
+                    vm.patient = p;
             if (ModelState.IsValid)
             {
+                vm.vaccine = AES.EncryptVaccine(vm.vaccine);
                 vm.patient.card.Vaccines.Add(vm.vaccine);
                 vm.vaccine.card = vm.patient.card;
-                vm.vaccine.medic = medic[0];
+                vm.vaccine.medic = medic;
                 ViewBag.message = "Vaccine added succesfully.";
                 dal.SaveChanges();
+                vm.patient = AES.DecryptPatient(vm.patient);
                 return View("PatientPage",vm.patient);
             }
             else

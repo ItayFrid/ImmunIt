@@ -9,13 +9,13 @@ namespace ImmunIt.Models
     public class User
     {
         [Required]
-        [StringLength(50, MinimumLength = 5, ErrorMessage = "Name must be between 5-50")]
+        //[StringLength(50, MinimumLength = 5, ErrorMessage = "Name must be between 5-50")]
         public string Name { get; set; }
 
         [Key]
         [Required]
-        [RegularExpression("^[0-9]{9,9}$")]
-        [StringLength(9, MinimumLength = 9, ErrorMessage = "Id Must be 9 digits!")]
+        //[RegularExpression("^[0-9]{9,9}$")]
+        //[StringLength(9, MinimumLength = 9, ErrorMessage = "Id Must be 9 digits!")]
         public string Id { get; set; }
 
         [Required]

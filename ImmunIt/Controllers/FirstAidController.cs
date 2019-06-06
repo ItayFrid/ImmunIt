@@ -1,4 +1,5 @@
-﻿using ImmunIt.DAL;
+﻿using ImmunIt.Classes;
+using ImmunIt.DAL;
 using ImmunIt.Models;
 using ImmunIt.ViewModels;
 using System;
@@ -22,33 +23,22 @@ namespace ImmunIt.Controllers
             return View();
         }
 
-
-
         public Patient search(string id,List<Patient> patients)
         {
             foreach (Patient p in patients)
-            {
                 if (id == p.Id)
                     return p;
-            }
             return null;
         }
-
 
          public ActionResult SearchPatients(string id)
         {
             DataLayer dal = new DataLayer();
             ViewModel vm = new ViewModel();
             vm.patients = dal.patients.ToList<Patient>();
+            vm.patients = AES.DecryptPatientList(vm.patients);
             vm.patient = search(id, vm.patients);
-
-
             return View("PatientPage", vm);
         }
-
-
-
-
-
     }
 }

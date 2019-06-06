@@ -1,9 +1,11 @@
-﻿using ImmunIt.DAL;
+﻿using ImmunIt.Classes;
+using ImmunIt.DAL;
 using ImmunIt.Models;
 using ImmunIt.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,34 +15,24 @@ namespace ImmunIt.Controllers
     {
         public ActionResult Index()
         {
-            DataLayer dal = new DataLayer();
-            ViewModel vm = new ViewModel();
-          //  vm.patients = (from x in dal.patients
-          //                 select x).ToList<Patient>();
-            return View(vm);
+            AddRootAdmin();
+            return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
-
-
 
         public ActionResult WhatIsVac()
         {
             return View();
         }
-
 
         public ActionResult WhyVac()
         {
@@ -59,7 +51,26 @@ namespace ImmunIt.Controllers
                 user.isEmailVerified = true;
                 dal.SaveChanges();
             }
+            user = AES.DecryptMedic(user);
             return View(user);
+        }
+        [NonAction]
+        private void AddRootAdmin()
+        {
+            DataLayer dal = new DataLayer();
+            TripleDES des = new TripleDES();
+            if (dal.users.Count() == 0)
+            {
+                Manager root = new Manager
+                {
+                    Name = AES.Encrypt("Manager"),
+                    Id = AES.Encrypt("111111111"),
+                    Password = des.TripleEncrypt("123"),
+                    role = "Manager"
+                };
+                dal.managers.Add(root);
+                dal.SaveChanges();
+            }
         }
     }
 }
