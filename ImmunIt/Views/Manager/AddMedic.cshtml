@@ -5,17 +5,20 @@
     ViewBag.Title = "AddMedic";
 }
 <script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Scripts/jquery.validate.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.form-validator.min.js"></script>
 <h2>Medic Register</h2>
 <hr />
 
-@using (Html.BeginForm("MedicRegister", "Manager", FormMethod.Post))
+@using (Html.BeginForm("MedicRegister", "Manager", FormMethod.Post, new { id = "form" }))
 {
     <div class="form-group row">
         <label for="inputId" class="col-sm-2 col-form-label">Id</label>
         <div class="col-sm-10">
-            @Html.TextBoxFor(m => m.Id, new { @class = "form-control", id = "inputId" })
+            @Html.TextBoxFor(m => m.Id, new { @class = "form-control",
+                                               id = "inputId" ,
+                                               data_validation="custom",
+                                               data_validation_regexp ="^[0-9]{9,9}$",
+                                               data_validation_help ="ID must be 9 digits"})
             <small class="text-danger">@Html.ValidationMessageFor(x => x.Id)</small>
         </div>
     </div>
@@ -23,32 +26,33 @@
     <div class="form-group row">
         <label for="inputId" class="col-sm-2 col-form-label">Email</label>
         <div class="col-sm-10">
-            @Html.TextBoxFor(m => m.email, new { @class = "form-control", id = "emailId" })
-            <small class="text-danger">@Html.ValidationMessageFor(x => x.email)</small>
+            @Html.TextBoxFor(m => m.email, new { @class = "form-control", id = "emailId" ,data_validation="email"})
         </div>
     </div>
 
     <div class="form-group row">
         <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
         <div class="col-sm-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "inputPassword" })
-            <small class="text-danger">@Html.ValidationMessageFor(x => x.Password)</small>
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control",
+                                                       id = "inputPassword",
+                                                       data_validation ="length",
+                                                       data_validation_length ="min8"})
         </div>
     </div>
 
     <div class="form-group row">
         <label for="inputName" class="col-sm-2 col-form-label">Full Name</label>
         <div class="col-sm-10">
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", id = "inputName" })
-            <small class="text-danger">@Html.ValidationMessageFor(x => x.Name)</small>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", id = "inputName",data_validation ="length",
+                                                       data_validation_length ="5-50"})
         </div>
     </div>
 
     <div class="form-group row">
         <label for="inputLicenseNumber" class="col-sm-2 col-form-label">License Number</label>
         <div class="col-sm-10">
-            @Html.TextBoxFor(m => m.LicenseNumber, new { @class = "form-control", id = "inputLicenseNumber" })
-            <small class="text-danger">@Html.ValidationMessageFor(x => x.LicenseNumber)</small>
+            @Html.TextBoxFor(m => m.LicenseNumber, new { @class = "form-control", id = "inputLicenseNumber",data_validation ="length",
+                                                       data_validation_length ="5-5"})
         </div>
     </div>
     <input id="role" name="role" type="hidden" value="Medic" />
@@ -56,7 +60,11 @@
     <h4 class="text-danger">@ViewBag.message</h4>
 }
 
-
+<script>
+    $.validate({
+        form : '#form'
+    });
+</script>
 
 
 

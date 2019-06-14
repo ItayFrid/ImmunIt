@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "SearchPage";
 }
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.form-validator.min.js"></script>
 
 <h2>Search Patient</h2>
 <hr />
@@ -11,9 +13,14 @@
     <div class="form-group row">
         <label for="inputID" class="col-sm-2 col-form-label">Patient ID</label>
         <div class="col-sm-10">
-            <input name="id" class="form-control" type="text">
+            <input name="id" class="form-control" type="text" data-validation="custom" 
+                                               data-validation-regexp ="^[0-9]{9,9}$" 
+                                               data-validation-help ="ID must be 9 digits">
         </div>
     </div>
 
     <input class="btn btn-outline-primary" id="submit" type="submit" value="Search Patient" />
 }
+<script>
+    $.validate();
+</script>

@@ -16,7 +16,7 @@
                     <th>Id</th>
                 </tr>
             </thead>
-            @foreach (var manager in Model.users)
+            @foreach (var manager in Model.managers)
             {
                 <tr>
                     <td>@manager.Name</td>
@@ -24,7 +24,7 @@
                 </tr>
             }
         </table>
-        Total Managers :<b class="text-info"> @Model.users.Count</b>
+        Total Managers :<b class="text-info"> @Model.managers.Count</b>
     </div>
     <div class="col-sm-4">
         <h4>Medics</h4>

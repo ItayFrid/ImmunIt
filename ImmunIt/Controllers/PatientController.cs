@@ -45,7 +45,8 @@ namespace ImmunIt.Controllers
             vm.immuneCard = vm.patient.card;
             List<Vaccine> vaccines = vm.immuneCard.Vaccines.ToList<Vaccine>();
             for (int i = 0; i < vaccines.Count; i++)
-                vaccines[i].medic = AES.DecryptMedic(vaccines[i].medic);
+                if(vaccines[i].medic.Name.Contains(":"))
+                    vaccines[i].medic = AES.DecryptMedic(vaccines[i].medic);
             vm.immuneCard.Vaccines = vaccines;
             return View(vm);
         }

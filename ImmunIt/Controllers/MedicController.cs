@@ -53,10 +53,10 @@ namespace ImmunIt.Controllers
             foreach (Patient p in patients)
                 if (AES.Decrypt(p.Id) == id)
                     patient = AES.DecryptPatient(p);
-            if (patients.Count != 0)
+            if (patient != null)
                 return View("PatientPage", patient);
             ViewBag.Search = "Patient Not Found";
-            return RedirectToAction("SearchPatient", "Medic");
+            return View("SearchPatient");
         }
 
         public ActionResult PatientPage(Patient patient)

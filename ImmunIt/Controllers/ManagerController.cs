@@ -120,9 +120,8 @@ namespace ImmunIt.Controllers
                                                   select x).ToList<Patient>());
             vm.medics = AES.DecryptMedicList((from x in dal.medics
                                               select x).ToList<Medic>());
-            vm.users = AES.DecryptUserList((from x in dal.users
-                                            where x.role == "Manager"
-                                            select x).ToList<User>());
+            vm.managers = AES.DecryptManagerList((from x in dal.managers
+                                            select x).ToList<Manager>());
             return View(vm);
         }
         [NonAction]

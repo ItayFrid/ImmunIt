@@ -14,6 +14,8 @@ namespace ImmunIt.ViewModels
         public List<Medic> medics { get; set; }
         public Patient patient { get; set; }
         public List<Patient> patients { get; set; }
+        public Manager manager { get; set; }
+        public List<Manager> managers { get; set; }
         public Vaccine vaccine { get; set; }
         public List<Vaccine> vaccines { get; set; }
         public List<VaccineJson> vaccinesJson { get; set; }

@@ -517,10 +517,12 @@ namespace ImmunIt.Classes
         public static Patient EncryptPatient(Patient patient)
         {
             patient.BloodType       = Encrypt(patient.BloodType);
-            patient.ChronicDiseases = Encrypt(patient.ChronicDiseases);
+            if (patient.ChronicDiseases != null)
+                patient.ChronicDiseases = Encrypt(patient.ChronicDiseases);
             patient.card            = EncryptCard(patient.card);
             patient.Id              = Encrypt(patient.Id);
-            patient.MedicineAllergy = Encrypt(patient.MedicineAllergy);
+            if(patient.MedicineAllergy!= null)
+                patient.MedicineAllergy = Encrypt(patient.MedicineAllergy);
             patient.Name            = Encrypt(patient.Name);
             patient.role            = Encrypt(patient.role);
             return patient;
@@ -567,10 +569,12 @@ namespace ImmunIt.Classes
         public static Patient DecryptPatient(Patient patient)
         {
             patient.BloodType       = Decrypt(patient.BloodType);
-            patient.ChronicDiseases = Decrypt(patient.ChronicDiseases);
+            if (patient.ChronicDiseases != null)
+                patient.ChronicDiseases = Decrypt(patient.ChronicDiseases);
             patient.card            = DecryptCard(patient.card);
             patient.Id              = Decrypt(patient.Id);
-            patient.MedicineAllergy = Decrypt(patient.MedicineAllergy);
+            if (patient.MedicineAllergy != null)
+                patient.MedicineAllergy = Decrypt(patient.MedicineAllergy);
             patient.Name            = Decrypt(patient.Name);
             return patient;
         }
