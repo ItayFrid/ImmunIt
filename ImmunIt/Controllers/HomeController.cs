@@ -66,7 +66,7 @@ namespace ImmunIt.Controllers
                     Name = AES.Encrypt("Manager"),
                     Id = AES.Encrypt("111111111"),
                     Password = des.TripleEncrypt("123"),
-                    role = "Manager"
+                    role = AES.Encrypt("Manager")
                 };
                 dal.managers.Add(root);
                 dal.SaveChanges();

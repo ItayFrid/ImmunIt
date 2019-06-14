@@ -502,6 +502,7 @@ namespace ImmunIt.Classes
             medic.LicenseNumber = Encrypt(medic.LicenseNumber);
             medic.Name          = Encrypt(medic.Name);
             medic.email         = Encrypt(medic.email);
+            medic.role          = Encrypt(medic.role);
             return medic;
         }
 
@@ -509,6 +510,7 @@ namespace ImmunIt.Classes
         {
             manager.Id      = Encrypt(manager.Id);
             manager.Name    = Encrypt(manager.Name);
+            manager.role    = Encrypt(manager.role);
             return manager;
         }
 
@@ -520,6 +522,7 @@ namespace ImmunIt.Classes
             patient.Id              = Encrypt(patient.Id);
             patient.MedicineAllergy = Encrypt(patient.MedicineAllergy);
             patient.Name            = Encrypt(patient.Name);
+            patient.role            = Encrypt(patient.role);
             return patient;
         }
 
@@ -541,6 +544,7 @@ namespace ImmunIt.Classes
         {
             user.Id     = Decrypt(user.Id);
             user.Name   = Decrypt(user.Name);
+            user.role   = Decrypt(user.role);
             return user;
         }
 
