@@ -250,6 +250,7 @@
     <Content Include="Views\Home\WhyVac.cshtml" />
     <Content Include="Views\Login\UserLogin.cshtml" />
     <Content Include="Views\Home\VerifyAccount.cshtml" />
+    <Content Include="Views\FirstAid\SearchPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

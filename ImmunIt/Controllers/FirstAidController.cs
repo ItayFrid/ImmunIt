@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ImmunIt.Controllers
 {
+    [Authorize(Roles = "Medic")]
     public class FirstAidController : Controller
     {
         // GET: FirstAid
@@ -31,8 +32,13 @@ namespace ImmunIt.Controllers
             return null;
         }
 
-         public ActionResult SearchPatients(string id)
+        public ActionResult SearchPage()
         {
+            return View();
+        }
+         public ActionResult SearchPatients()
+        {
+            string id = Request.Form["id"];
             DataLayer dal = new DataLayer();
             ViewModel vm = new ViewModel();
             vm.patients = dal.patients.ToList<Patient>();

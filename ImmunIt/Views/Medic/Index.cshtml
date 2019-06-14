@@ -6,14 +6,17 @@
 <hr />
 @if (Model.isEmailVerified)
 {
-    <ul class="list-group text-center">
-        <li class="list-group-item">
-            <a href="@Url.Action("WatchVaccineInfo", "Medic")">Watch Vaccines Info</a>
-        </li>
-        <li class="list-group-item">
-            <a href="@Url.Action("SearchPatient", "Medic")">Search Patient</a>
-        </li>
-    </ul>
+<ul class="list-group text-center">
+    <li class="list-group-item">
+        <a href="@Url.Action("WatchVaccineInfo", "Medic")">Watch Vaccines Info</a>
+    </li>
+    <li class="list-group-item">
+        <a href="@Url.Action("SearchPatient", "Medic")">Search Patient</a>
+    </li>
+    <li class="list-group-item">
+        <a href="@Url.Action("SearchPage", "FirstAid")">First Aid</a>
+    </li>
+</ul>
 }
 else
 {

@@ -5,10 +5,10 @@
     ViewBag.Title = "PatientPage";
 }
 
-@if (Model.medic != null)
+@*@if (Model.medic != null)
 {
     <h2>Welcome, Model.medic</h2>
-}
+}*@
 
 <br>
 
@@ -25,7 +25,7 @@
         <td>@Model.patient.Id</td>
         <td>@Model.patient.Name</td>
         <td>@Model.patient.BloodType</td>
+        <td>@Model.patient.MedicineAllergy</td>
         <td>@Model.patient.ChronicDiseases</td>
     </tr>
-    }
 </table>

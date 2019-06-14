@@ -13,10 +13,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
-//TODO:Add Manager Register
 namespace ImmunIt.Controllers
 {
-    //[Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager")]
     public class ManagerController : Controller
     {
         // GET: Manager
